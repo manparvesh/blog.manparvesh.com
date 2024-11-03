@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Hugo-Tufte Theme Example Site</title>
-    <link>https://hugo-tufte.netlify.app/categories/</link>
-    <description>Recent content in Categories on Hugo-Tufte Theme Example Site</description>
+    <title>Categories on Man Parvesh&#39;s Tech Shenanigans</title>
+    <link>https://blog.manparvesh.com/categories/</link>
+    <description>Recent content in Categories on Man Parvesh&#39;s Tech Shenanigans</description>
     <generator>Hugo</generator>
     <language>en-US</language>
     <lastBuildDate>Sun, 16 Apr 2023 16:03:45 +0100</lastBuildDate>
-    <atom:link href="https://hugo-tufte.netlify.app/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.manparvesh.com/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Katex</title>
-      <link>https://hugo-tufte.netlify.app/categories/katex/</link>
+      <link>https://blog.manparvesh.com/categories/katex/</link>
       <pubDate>Sun, 16 Apr 2023 16:03:45 +0100</pubDate>
-      <guid>https://hugo-tufte.netlify.app/categories/katex/</guid>
+      <guid>https://blog.manparvesh.com/categories/katex/</guid>
       <description></description>
     </item>
     <item>
       <title>Latex</title>
-      <link>https://hugo-tufte.netlify.app/categories/latex/</link>
+      <link>https://blog.manparvesh.com/categories/latex/</link>
       <pubDate>Sun, 16 Apr 2023 16:03:45 +0100</pubDate>
-      <guid>https://hugo-tufte.netlify.app/categories/latex/</guid>
+      <guid>https://blog.manparvesh.com/categories/latex/</guid>
       <description></description>
     </item>
     <item>
       <title>Tufte-Css</title>
-      <link>https://hugo-tufte.netlify.app/categories/tufte-css/</link>
+      <link>https://blog.manparvesh.com/categories/tufte-css/</link>
       <pubDate>Sun, 16 Apr 2023 16:03:45 +0100</pubDate>
-      <guid>https://hugo-tufte.netlify.app/categories/tufte-css/</guid>
+      <guid>https://blog.manparvesh.com/categories/tufte-css/</guid>
       <description></description>
     </item>
     <item>
       <title>Fun</title>
-      <link>https://hugo-tufte.netlify.app/categories/fun/</link>
+      <link>https://blog.manparvesh.com/categories/fun/</link>
       <pubDate>Sat, 29 Mar 2014 00:00:00 +0000</pubDate>
-      <guid>https://hugo-tufte.netlify.app/categories/fun/</guid>
+      <guid>https://blog.manparvesh.com/categories/fun/</guid>
       <description></description>
     </item>
     <item>
       <title>Hugo</title>
-      <link>https://hugo-tufte.netlify.app/categories/hugo/</link>
+      <link>https://blog.manparvesh.com/categories/hugo/</link>
       <pubDate>Sat, 29 Mar 2014 00:00:00 +0000</pubDate>
-      <guid>https://hugo-tufte.netlify.app/categories/hugo/</guid>
+      <guid>https://blog.manparvesh.com/categories/hugo/</guid>
       <description></description>
     </item>
     <item>
       <title>Test</title>
-      <link>https://hugo-tufte.netlify.app/categories/test/</link>
+      <link>https://blog.manparvesh.com/categories/test/</link>
       <pubDate>Sat, 29 Mar 2014 00:00:00 +0000</pubDate>
-      <guid>https://hugo-tufte.netlify.app/categories/test/</guid>
+      <guid>https://blog.manparvesh.com/categories/test/</guid>
       <description></description>
     </item>
   </channel>
