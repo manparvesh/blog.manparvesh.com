@@ -17,6 +17,10 @@ publish:
 	@git commit -m "Publishing site"
 	@git push origin HEAD
 
+post:
+	@cd exampleSite && hugo new --logLevel info content/posts/$(NAME).md
+	@cd .. 
+
 serve:
 	@cd exampleSite && hugo server --buildDrafts --disableFastRender
 

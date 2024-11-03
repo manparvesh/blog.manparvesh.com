@@ -1,11 +1,11 @@
 ---
 title: "{{ replace .Name "-" " " | title }}"
-subtitle: Fancy Subtitle
-author: Totally famous person
+subtitle: Subtitle
+author: Man Parvesh Singh Randhawa
 date: "{{ .Date }}"
 meta: true
 math: false
-toc: false
+toc: true
 hideDate: false
 hideReadTime: false
 categories: []
@@ -13,4 +13,3 @@ draft: true
 description: ""
 ---
 
-<!--more-->
