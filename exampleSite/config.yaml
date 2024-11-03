@@ -37,7 +37,7 @@ params:
   copyright: Copyright 2024
   copyrightHolder: Man Parvesh Singh Randhawa
   # Show the "Powered by Hugo-Tufte and Hugo."
-  showPoweredBy: true
+  showPoweredBy: false
   # Site wide kill switch for date in pages
   hidedate: false
   # Site wide kill switch for post summary on home page
@@ -86,10 +86,10 @@ menu:
       weight: -100
       identifier: posts
       url: /posts/
-    - name: A-Book
-      weight: -95
-      identifier: book
-      url: /a-book/
+    # - name: A-Book
+    #   weight: -95
+    #   identifier: book
+    #   url: /a-book/
     - name: Categories
       weight: -90
       identifier: categories
@@ -102,8 +102,8 @@ menu:
 # FOOTER MENU
 # If you need to add custom links to you footer: put them here.
 # -----------------------------------------------------------------------
-  # footer:
-  #   - name: Custom footer link
-  #     weight: -90
-  #     identifier: custom_link
-  #     url: 'https://example.com'
+  footer:
+    - name: 🌐 Webpage
+      weight: -90
+      identifier: custom_link
+      url: 'https://manparvesh.com'

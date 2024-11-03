@@ -6,48 +6,20 @@
     <description>Recent content in Categories on Man Parvesh&#39;s Tech Shenanigans</description>
     <generator>Hugo</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 16 Apr 2023 16:03:45 +0100</lastBuildDate>
+    <lastBuildDate>Sat, 21 Sep 2024 01:21:22 -0700</lastBuildDate>
     <atom:link href="https://blog.manparvesh.com/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Katex</title>
-      <link>https://blog.manparvesh.com/categories/katex/</link>
-      <pubDate>Sun, 16 Apr 2023 16:03:45 +0100</pubDate>
-      <guid>https://blog.manparvesh.com/categories/katex/</guid>
+      <title>Python</title>
+      <link>https://blog.manparvesh.com/categories/python/</link>
+      <pubDate>Sat, 21 Sep 2024 01:21:22 -0700</pubDate>
+      <guid>https://blog.manparvesh.com/categories/python/</guid>
       <description></description>
     </item>
     <item>
-      <title>Latex</title>
-      <link>https://blog.manparvesh.com/categories/latex/</link>
-      <pubDate>Sun, 16 Apr 2023 16:03:45 +0100</pubDate>
-      <guid>https://blog.manparvesh.com/categories/latex/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Tufte-Css</title>
-      <link>https://blog.manparvesh.com/categories/tufte-css/</link>
-      <pubDate>Sun, 16 Apr 2023 16:03:45 +0100</pubDate>
-      <guid>https://blog.manparvesh.com/categories/tufte-css/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Fun</title>
-      <link>https://blog.manparvesh.com/categories/fun/</link>
-      <pubDate>Sat, 29 Mar 2014 00:00:00 +0000</pubDate>
-      <guid>https://blog.manparvesh.com/categories/fun/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Hugo</title>
-      <link>https://blog.manparvesh.com/categories/hugo/</link>
-      <pubDate>Sat, 29 Mar 2014 00:00:00 +0000</pubDate>
-      <guid>https://blog.manparvesh.com/categories/hugo/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Test</title>
-      <link>https://blog.manparvesh.com/categories/test/</link>
-      <pubDate>Sat, 29 Mar 2014 00:00:00 +0000</pubDate>
-      <guid>https://blog.manparvesh.com/categories/test/</guid>
+      <title>Yoda</title>
+      <link>https://blog.manparvesh.com/categories/yoda/</link>
+      <pubDate>Sat, 21 Sep 2024 01:21:22 -0700</pubDate>
+      <guid>https://blog.manparvesh.com/categories/yoda/</guid>
       <description></description>
     </item>
   </channel>

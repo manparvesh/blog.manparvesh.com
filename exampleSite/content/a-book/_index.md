@@ -3,7 +3,7 @@ title: Probably A Book
 subtitle: Best book ever!
 type: book
 layout: all
-draft: true
+draft: false
 ---
 This is a layout showcase for:
 

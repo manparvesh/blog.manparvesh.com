@@ -6,6 +6,7 @@ subtitle: Fancy Subtitle
 meta: true
 math: true
 toc: true
+draft: true
 # hideDate: true
 # hideReadTime: true
 categories: [katex, latex, tufte-css]
