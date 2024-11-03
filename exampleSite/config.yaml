@@ -29,7 +29,7 @@ params:
   favicon: "./favicon.ico"
   touchicon: "./touch-icon.png"
   # Dark code highlighting
-  codeblocksdark: false
+  codeblocksdark: true
   # Customize the indicator for margin notes
   # Some suggestions: ⊕, 💬, 💭, 📑, 🏷, ✍, 💡, 🧐, 📎, 📌
   marginNoteInd: "⊕"
