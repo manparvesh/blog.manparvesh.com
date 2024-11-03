@@ -7,10 +7,15 @@ help:
 	@echo "- 'rebuild': rebuild the public directory in the 'exampleSite'"
 
 # COMMANDS
-rebuild:
+build:
 	@rm -rf exampleSite/public
 	@cd exampleSite && hugo --destination ../docs && cd .. 
 	@echo "SITE REBUILT"
+
+publish:
+	@git add -A
+	@git commit -m "Publishing site"
+	@git push origin HEAD
 
 serve:
 	@cd exampleSite && hugo server --buildDrafts --disableFastRender
