@@ -9,7 +9,7 @@ help:
 # COMMANDS
 rebuild:
 	@rm -rf exampleSite/public
-	@cd exampleSite && hugo && cd .. 
+	@cd exampleSite && hugo --destination ../docs && cd .. 
 	@echo "SITE REBUILT"
 
 serve:
