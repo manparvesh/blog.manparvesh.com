@@ -25,5 +25,8 @@ post:
 serve:
 	@cd exampleSite && hugo server --buildDrafts --disableFastRender
 
+serve-nodrafts:
+	@cd exampleSite && hugo server --disableFastRender
+
 chroma:
 	hugo gen chromastyles --style=monokai > assets/scss/syntax/syntax-dark.scss

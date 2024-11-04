@@ -303,7 +303,7 @@ func main() {
 
 Here's an example without line numbers. 
 
-```go {hl_lines=["2-5"],linenostart=199}
+```go {hl_lines=["5-8"]}
 package main
 
 import "log"
