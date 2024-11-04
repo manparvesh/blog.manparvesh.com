@@ -69,7 +69,7 @@ params:
   # google_scholar: jm5QaHkAAAAJ
 
 taxonomies:
-  category: categories
+  series: series
   tag: tags
 
 # -----------------------------------------------------------------------
@@ -89,10 +89,10 @@ menu:
     #   weight: -95
     #   identifier: book
     #   url: /a-book/
-    - name: Categories
+    - name: Series
       weight: -90
-      identifier: categories
-      url: /categories/
+      identifier: series
+      url: /series/
     - name: Tags
       weight: -85
       identifier: tags

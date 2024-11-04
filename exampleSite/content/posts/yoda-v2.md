@@ -8,8 +8,8 @@ math: false
 toc: true
 hideDate: false
 hideReadTime: false
-categories: [yoda]
 tags: [python, yoda]
+series: [Yoda]
 draft: false
 description: "A brief history of Yoda and why I decided to rewrite it"
 ---

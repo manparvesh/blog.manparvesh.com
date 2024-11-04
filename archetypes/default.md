@@ -8,7 +8,7 @@ math: false
 toc: true
 hideDate: false
 hideReadTime: false
-categories: []
+series: []
 tags: []
 draft: true
 description: ""

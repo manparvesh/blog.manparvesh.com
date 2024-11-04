@@ -1,0 +1,25 @@
+{{ if .Params.series }}
+  {{ $seriesName := index .Params.series 0 }}
+  {{ $series := index .Site.Taxonomies.series (urlize $seriesName) }}
+  {{ if gt (len $series.Pages) 0 }}
+    <hr>
+    <div>
+      <h3>This article is a part of the series: "{{ $seriesName }}"</h3>
+      <ul class="list-group">
+        {{ range $num, $post := $series.Pages.ByDate }}
+          {{ if eq $post.Permalink $.Page.Permalink }}
+            <li class="list-group-item active">
+              Part {{ add $num 1 }}: {{ $post.Params.title }} (this article)
+            </li>
+          {{ else }}
+            <li class="list-group-item">
+              <a href="{{ $post.Permalink }}">
+                Part {{ add $num 1 }}: {{ $post.Params.title }}
+              </a>
+            </li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    </div>
+  {{ end }}
+{{ end }}
