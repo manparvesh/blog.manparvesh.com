@@ -9,20 +9,22 @@
 {{- if and (.IsPage) (.Params.meta) -}}
 <span class="content-meta">
   {{- if .Params.author -}}
-  <p class="author">{{ .Params.author }}</p>
+  <p class="author">✍️ {{ .Params.author }}</p>
   {{- end -}}
 
   {{- if not .Params.hidedate -}}
-  <p class="date">{{ .Date.Format "2006-01-02" }}</p>
+  <span class="date">📆 {{ .Date.Format "2 Jan, 2006" }}&nbsp;</span>
   {{- end -}}
 
   {{- if not .Params.hidereadtime -}}
-  <span>{{ .ReadingTime }} min read&nbsp;</span>
+  <span>🕒 {{ .ReadingTime }} min&nbsp;</span>
   {{- end -}}
 
+  <span>🏷️
   {{- range .Params.tags -}}
   <a href="{{ "/tags/" | absURL }}{{ . | urlize }}">{{ . }}</a>&nbsp;
   {{- end -}}
+  </span>
 </span>
 {{- end -}}
 </section>
