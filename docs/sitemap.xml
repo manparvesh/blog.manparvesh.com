@@ -2,9 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blog.manparvesh.com/categories/</loc>
-    <lastmod>2024-09-21T01:21:22-07:00</lastmod>
-  </url><url>
     <loc>https://blog.manparvesh.com/</loc>
     <lastmod>2024-09-21T01:21:22-07:00</lastmod>
   </url><url>
@@ -14,13 +11,16 @@
     <loc>https://blog.manparvesh.com/tags/python/</loc>
     <lastmod>2024-09-21T01:21:22-07:00</lastmod>
   </url><url>
+    <loc>https://blog.manparvesh.com/series/</loc>
+    <lastmod>2024-09-21T01:21:22-07:00</lastmod>
+  </url><url>
     <loc>https://blog.manparvesh.com/tags/</loc>
     <lastmod>2024-09-21T01:21:22-07:00</lastmod>
   </url><url>
     <loc>https://blog.manparvesh.com/tags/yoda/</loc>
     <lastmod>2024-09-21T01:21:22-07:00</lastmod>
   </url><url>
-    <loc>https://blog.manparvesh.com/categories/yoda/</loc>
+    <loc>https://blog.manparvesh.com/series/yoda/</loc>
     <lastmod>2024-09-21T01:21:22-07:00</lastmod>
   </url><url>
     <loc>https://blog.manparvesh.com/posts/yoda-v2/</loc>

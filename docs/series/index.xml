@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Series on Man Parvesh&#39;s Tech Shenanigans</title>
+    <link>https://blog.manparvesh.com/series/</link>
+    <description>Recent content in Series on Man Parvesh&#39;s Tech Shenanigans</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sat, 21 Sep 2024 01:21:22 -0700</lastBuildDate>
+    <atom:link href="https://blog.manparvesh.com/series/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Yoda</title>
+      <link>https://blog.manparvesh.com/series/yoda/</link>
+      <pubDate>Sat, 21 Sep 2024 01:21:22 -0700</pubDate>
+      <guid>https://blog.manparvesh.com/series/yoda/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
