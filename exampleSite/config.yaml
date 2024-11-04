@@ -70,7 +70,6 @@ params:
 
 taxonomies:
   category: categories
-  series: series
   tag: tags
 
 # -----------------------------------------------------------------------
@@ -94,6 +93,10 @@ menu:
       weight: -90
       identifier: categories
       url: /categories/
+    - name: Tags
+      weight: -85
+      identifier: tags
+      url: /tags/
     - name: About
       weight: -80
       identifier: about
@@ -103,7 +106,7 @@ menu:
 # If you need to add custom links to you footer: put them here.
 # -----------------------------------------------------------------------
   footer:
-    - name: 🌐 Webpage
+    - name: Webpage
       weight: -90
       identifier: custom_link
       url: 'https://manparvesh.com'
