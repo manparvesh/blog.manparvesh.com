@@ -39,6 +39,7 @@ Temporary Items
 *.patch
 
 # Generated files by hugo
+public/
 exampleSite/public/*
 /resources/_gen/
 /exampleSite/resources/_gen/
