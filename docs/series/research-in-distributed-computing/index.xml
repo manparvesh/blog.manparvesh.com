@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Research in Distributed Computing on Man Parvesh&#39;s Tech Shenanigans</title>
+    <link>https://blog.manparvesh.com/series/research-in-distributed-computing/</link>
+    <description>Recent content in Research in Distributed Computing on Man Parvesh&#39;s Tech Shenanigans</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sun, 03 Nov 2024 19:04:25 -0800</lastBuildDate>
+    <atom:link href="https://blog.manparvesh.com/series/research-in-distributed-computing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Consistency Tradeoffs in Distributed Databases</title>
+      <link>https://blog.manparvesh.com/posts/consistency-tradeoffs-in-distributed-databases/</link>
+      <pubDate>Sun, 03 Nov 2024 19:04:25 -0800</pubDate>
+      <guid>https://blog.manparvesh.com/posts/consistency-tradeoffs-in-distributed-databases/</guid>
+      <description>&lt;p&gt;Some paper&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
