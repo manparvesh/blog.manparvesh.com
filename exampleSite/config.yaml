@@ -23,6 +23,10 @@ markup:
     noClasses: false
     guessSyntax: true
 
+services:
+  disqus:
+    shortname: manparvesh
+
 params:
   # Subtitle of the website
   subtitle: "My writings about all the fun I have with software and technology"

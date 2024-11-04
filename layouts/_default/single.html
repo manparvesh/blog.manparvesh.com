@@ -12,5 +12,6 @@
   {{ partial "series.html" . }}
   <section>{{ partial "footer.html" . }}</section>
   <section>{{ partial "nav.html" . }}</section>
+  {{ template "_internal/disqus.html" . }}
 </article>
 {{ end }}
