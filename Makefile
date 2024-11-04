@@ -9,6 +9,7 @@ help:
 # COMMANDS
 build:
 	@rm -rf docs
+	@rm -rf exampleSite/public
 	@cd exampleSite && hugo --destination ../docs && cd .. 
 	@echo "SITE REBUILT"
 

@@ -32,9 +32,9 @@ params:
   codeblocksdark: true
   # Customize the indicator for margin notes
   # Some suggestions: ⊕, 💬, 💭, 📑, 🏷, ✍, 💡, 🧐, 📎, 📌
-  marginNoteInd: "⊕"
+  marginNoteInd: "💭"
   # Your name or the name of you company
-  copyright: Copyright 2024
+  copyright: Copyright 2024 Man Parvesh Singh Randhawa
   copyrightHolder: Man Parvesh Singh Randhawa
   # Show the "Powered by Hugo-Tufte and Hugo."
   showPoweredBy: false
