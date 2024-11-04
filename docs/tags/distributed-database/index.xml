@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Distributed-Database on Man Parvesh&#39;s Tech Shenanigans</title>
+    <link>https://blog.manparvesh.com/tags/distributed-database/</link>
+    <description>Recent content in Distributed-Database on Man Parvesh&#39;s Tech Shenanigans</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sun, 03 Nov 2024 19:04:25 -0800</lastBuildDate>
+    <atom:link href="https://blog.manparvesh.com/tags/distributed-database/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Choosing the Right Distributed Database: Balancing Consistency, Performance, and Cost</title>
+      <link>https://blog.manparvesh.com/posts/choosing-the-right-distributed-database/</link>
+      <pubDate>Sun, 03 Nov 2024 19:04:25 -0800</pubDate>
+      <guid>https://blog.manparvesh.com/posts/choosing-the-right-distributed-database/</guid>
+      <description>&lt;p&gt;In today’s fast-paced digital landscape, selecting the appropriate distributed database is pivotal for building scalable and reliable applications. One of the most critical decisions revolves around balancing consistency, availability, performance, and cost. In this blog post, we explore the &lt;strong&gt;consistency tradeoffs in distributed databases&lt;/strong&gt;, detailing how we navigated these challenges to select the optimal solution for our needs.&lt;/p&gt;&#xA;&lt;h2 id=&#34;understanding-consistency-in-distributed-databases&#34;&gt;&#xA;Understanding Consistency in Distributed Databases&#xA;&lt;a href=&#34;#understanding-consistency-in-distributed-databases&#34; class=&#34;heading-anchor&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Consistency&lt;/strong&gt; refers to the guarantee that every read receives the most recent write or an error. In distributed systems, achieving strong consistency can be challenging due to the inherent complexities of synchronizing data across multiple nodes. Balancing consistency with other factors like availability, latency, and cost is essential for building efficient and reliable applications.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

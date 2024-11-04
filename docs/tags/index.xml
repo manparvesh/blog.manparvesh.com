@@ -9,10 +9,24 @@
     <lastBuildDate>Sun, 03 Nov 2024 19:04:25 -0800</lastBuildDate>
     <atom:link href="https://blog.manparvesh.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Hello</title>
-      <link>https://blog.manparvesh.com/tags/hello/</link>
+      <title>Distributed-Computing</title>
+      <link>https://blog.manparvesh.com/tags/distributed-computing/</link>
       <pubDate>Sun, 03 Nov 2024 19:04:25 -0800</pubDate>
-      <guid>https://blog.manparvesh.com/tags/hello/</guid>
+      <guid>https://blog.manparvesh.com/tags/distributed-computing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Distributed-Database</title>
+      <link>https://blog.manparvesh.com/tags/distributed-database/</link>
+      <pubDate>Sun, 03 Nov 2024 19:04:25 -0800</pubDate>
+      <guid>https://blog.manparvesh.com/tags/distributed-database/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Redis</title>
+      <link>https://blog.manparvesh.com/tags/redis/</link>
+      <pubDate>Sun, 03 Nov 2024 19:04:25 -0800</pubDate>
+      <guid>https://blog.manparvesh.com/tags/redis/</guid>
       <description></description>
     </item>
     <item>

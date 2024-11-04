@@ -1,5 +1,5 @@
 # Set your theme here
-theme: hugo-tufte
+theme: blog.manparvesh.com
 # Remove this if your site folder is not inside the theme folder
 themesDir: "../.."
 # The language of your website (see https://www.andiamo.co.uk/resources/iso-language-codes/ for reference)
@@ -105,12 +105,12 @@ menu:
       weight: -80
       identifier: about
       url: /about/
-# -----------------------------------------------------------------------
-# FOOTER MENU
-# If you need to add custom links to you footer: put them here.
-# -----------------------------------------------------------------------
+  # -----------------------------------------------------------------------
+  # FOOTER MENU
+  # If you need to add custom links to you footer: put them here.
+  # -----------------------------------------------------------------------
   footer:
     - name: Webpage
       weight: -90
       identifier: custom_link
-      url: 'https://manparvesh.com'
+      url: "https://manparvesh.com"

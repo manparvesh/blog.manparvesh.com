@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+<title>Choosing the Right Distributed Database: Balancing Consistency, Performance, and Cost - Man Parvesh&#39;s Tech Shenanigans</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description"
+    content="Navigating the tradeoffs in Distributed Databases to choose a solution that provides low-latency and strong consistency ">
+<link rel="canonical" href="https://blog.manparvesh.com/posts/choosing-the-right-distributed-database/" />
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://blog.manparvesh.com//index.xml"
+      title="Man Parvesh&#39;s Tech Shenanigans">
+
+
+<link rel="icon" href="https://blog.manparvesh.com/favicon.ico" />
+
+
+<link rel="apple-touch-icon" href="https://blog.manparvesh.com/touch-icon.png" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.1.0/modern-normalize.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+
+
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Noto+Emoji&display=swap" />
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Noto+Emoji&display=swap"
+      media="print" onload="this.media='all'" />
+<noscript>
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap" />
+</noscript>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://blog.manparvesh.com/css/hugo-tufte.min.css">
+
+
+
+<link rel="stylesheet" href="https://blog.manparvesh.com/css/hugo-tufte-options.min.css">
+
+<link rel="stylesheet" href="https://blog.manparvesh.com/css/hugo-tufte-override.css">
+
+</head>
+<body>
+
+
+<article id="main">
+  <section>
+<h1 class="content-title">Choosing the Right Distributed Database: Balancing Consistency, Performance, and Cost</h1><p class=subtitle>Navigating the tradeoffs in Distributed Databases to choose a solution that provides low-latency and strong consistency</p><span class="content-meta"><p class="author">✍️ Man Parvesh Singh Randhawa</p><span class="date">📆 3 Nov, 2024&nbsp;</span><span>🕒 6 min&nbsp;</span><span>🏷️<a href="https://blog.manparvesh.com/tags/distributed-computing">distributed-computing</a>&nbsp;<a href="https://blog.manparvesh.com/tags/distributed-database">distributed-database</a>&nbsp;<a href="https://blog.manparvesh.com/tags/redis">redis</a>&nbsp;</span></span></section>
+
+  
+<section>
+  <details closed class="toc">
+    <summary>Table of Contents</summary>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#understanding-consistency-in-distributed-databases">Understanding Consistency in Distributed Databases</a>
+      <ul>
+        <li><a href="#the-cap-theorem">The CAP Theorem</a></li>
+      </ul>
+    </li>
+    <li><a href="#our-requirements">Our requirements</a></li>
+    <li><a href="#evaluating-aws-distributed-database-options">Evaluating AWS Distributed Database Options</a>
+      <ul>
+        <li><a href="#amazon-dynamodb">Amazon DynamoDB</a></li>
+        <li><a href="#amazon-elasticache-redis">Amazon ElastiCache (Redis)</a></li>
+        <li><a href="#amazon-memorydb-for-redis">Amazon MemoryDB for Redis</a></li>
+      </ul>
+    </li>
+    <li><a href="#making-the-decision-why-we-chose-amazon-memorydb">Making the Decision: Why We Chose Amazon MemoryDB</a>
+      <ul>
+        <li><a href="#1-strong-consistency-with-low-latency">1. Strong Consistency with Low Latency</a></li>
+        <li><a href="#2-managed-service-benefits">2. Managed Service Benefits</a></li>
+        <li><a href="#3-durability-and-reliability">3. Durability and Reliability</a></li>
+        <li><a href="#4-cost-justification">4. Cost Justification</a></li>
+        <li><a href="#5-future-proofing">5. Future-Proofing</a></li>
+      </ul>
+    </li>
+    <li><a href="#pricing-comparison-summary">Pricing Comparison Summary</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+  </details>
+</section>
+
+
+  <section><p>In today’s fast-paced digital landscape, selecting the appropriate distributed database is pivotal for building scalable and reliable applications. One of the most critical decisions revolves around balancing consistency, availability, performance, and cost. In this blog post, we explore the <strong>consistency tradeoffs in distributed databases</strong>, detailing how we navigated these challenges to select the optimal solution for our needs.</p>
+<h2 id="understanding-consistency-in-distributed-databases">
+Understanding Consistency in Distributed Databases
+<a href="#understanding-consistency-in-distributed-databases" class="heading-anchor">#</a>
+</h2>
+<p><strong>Consistency</strong> refers to the guarantee that every read receives the most recent write or an error. In distributed systems, achieving strong consistency can be challenging due to the inherent complexities of synchronizing data across multiple nodes. Balancing consistency with other factors like availability, latency, and cost is essential for building efficient and reliable applications.</p>
+<h3 id="the-cap-theorem">
+The CAP Theorem
+<a href="#the-cap-theorem" class="heading-anchor">#</a>
+</h3>
+<p>The CAP Theorem<label for="sidenote-1" class="margin-toggle sidenote-number">(1)</label>
+<input type="checkbox" id="sidenote-1" class="margin-toggle"/>
+<span class="sidenote">
+<span class="sidenote-number">(1)</span><a href="https://en.wikipedia.org/wiki/CAP_theorem" target="_blank" >https://en.wikipedia.org/wiki/CAP_theorem</a>
+</span>
+, introduced by Eric Brewer, states that a distributed data store can only provide two out of the following three guarantees simultaneously:</p>
+<ol>
+<li>Consistency: Every read receives the most recent write.</li>
+<li>Availability: Every request receives a response, without guarantee that it contains the most recent write.</li>
+<li>Partition Tolerance: The system continues to operate despite arbitrary message loss or failure of part of the system.</li>
+</ol>
+<p>Understanding this theorem is fundamental when evaluating distributed databases, as it highlights the tradeoffs that must be made based on application requirements.</p>
+<h2 id="our-requirements">
+Our requirements
+<a href="#our-requirements" class="heading-anchor">#</a>
+</h2>
+<p>When selecting a distributed database for our application, we had clear priorities:</p>
+<ol>
+<li>Low Latency Writes and Reads: Our application demands rapid data access and updates to ensure a seamless user experience.</li>
+<li>Strong Consistency: We required guarantees that users always see the most up-to-date data.</li>
+<li>Managed Service by AWS: Leveraging AWS managed services would reduce operational overhead and ensure scalability and reliability.</li>
+<li>Cost-Effectiveness: While performance and consistency are paramount, keeping operational costs within budget is also crucial.</li>
+</ol>
+<p>With these requirements in mind, we evaluated several AWS offerings to determine the best fit.</p>
+<h2 id="evaluating-aws-distributed-database-options">
+Evaluating AWS Distributed Database Options
+<a href="#evaluating-aws-distributed-database-options" class="heading-anchor">#</a>
+</h2>
+<h3 id="amazon-dynamodb">
+Amazon DynamoDB
+<a href="#amazon-dynamodb" class="heading-anchor">#</a>
+</h3>
+<h4 id="advantages">
+Advantages
+<a href="#advantages" class="heading-anchor">#</a>
+</h4>
+<ul>
+<li>Fully Managed: DynamoDB handles setup, maintenance, and scaling automatically.</li>
+<li>High Availability: Designed for 99.999% availability.</li>
+<li>Scalability: Seamlessly scales to handle large volumes of traffic.</li>
+<li>Flexible Pricing: Offers on-demand and provisioned capacity modes to match varying workloads.</li>
+</ul>
+<h4 id="disadvantages">
+Disadvantages:
+<a href="#disadvantages" class="heading-anchor">#</a>
+</h4>
+<ul>
+<li>Eventual Consistency by Default: While DynamoDB offers strong consistency options, they come at the cost of higher latency and throughput limitations.</li>
+<li>Complex Pricing: Costs can escalate with increased read/write capacity and additional features like DynamoDB Streams.</li>
+</ul>
+<h4 id="pricing-details">
+Pricing Details:
+<a href="#pricing-details" class="heading-anchor">#</a>
+</h4>
+<ul>
+<li>Provisioned Capacity Mode: Charged based on the number of read and write capacity units. As of the latest pricing:
+<ul>
+<li>Write Capacity Unit (WCU): $0.00065 per WCU-hour.</li>
+<li>Read Capacity Unit (RCU): $0.00013 per RCU-hour.</li>
+</ul>
+</li>
+<li>On-Demand Capacity Mode: Pay-per-request pricing:
+<ul>
+<li>Write Request Unit: $1.25 per million writes.</li>
+<li>Read Request Unit: $0.25 per million reads.</li>
+</ul>
+</li>
+<li>Additional Costs: Features like Global Tables, Streams, and backups incur extra charges.</li>
+</ul>
+<h3 id="amazon-elasticache-redis">
+Amazon ElastiCache (Redis)
+<a href="#amazon-elasticache-redis" class="heading-anchor">#</a>
+</h3>
+<h4 id="advantages-1">
+Advantages:
+<a href="#advantages-1" class="heading-anchor">#</a>
+</h4>
+<ul>
+<li>Low Latency: Redis is renowned for its lightning-fast read and write operations, ideal for applications requiring real-time data access.</li>
+<li>Versatility: Supports various data structures, making it suitable for a wide range of use cases.</li>
+<li>Managed Service: ElastiCache handles maintenance, patching, and scaling.</li>
+</ul>
+<h4 id="disadvantages-1">
+Disadvantages:
+<a href="#disadvantages-1" class="heading-anchor">#</a>
+</h4>
+<ul>
+<li>Consistency Challenges: Redis, particularly when used in a distributed setup, can face challenges in maintaining strong consistency across nodes.</li>
+<li>Persistence Limitations: While Redis supports persistence, it’s primarily an in-memory store, which might not be ideal for all use cases requiring durable storage.</li>
+</ul>
+<h4 id="pricing-details-1">
+Pricing Details:
+<a href="#pricing-details-1" class="heading-anchor">#</a>
+</h4>
+<ul>
+<li>Instance Pricing: Varies based on instance type and region. For example:
+<ul>
+<li>Cache.t4g.small: Approximately $0.034 per hour.</li>
+<li>Cache.m6g.large: Approximately $0.154 per hour.</li>
+</ul>
+</li>
+<li>Additional Costs: Data transfer, backups, and replication may incur extra charges.</li>
+</ul>
+<h3 id="amazon-memorydb-for-redis">
+Amazon MemoryDB for Redis
+<a href="#amazon-memorydb-for-redis" class="heading-anchor">#</a>
+</h3>
+<h4 id="advantages-2">
+Advantages:
+<a href="#advantages-2" class="heading-anchor">#</a>
+</h4>
+<ul>
+<li>Strong Consistency: MemoryDB provides ACID transactions, ensuring strong consistency across distributed nodes.</li>
+<li>Low Latency: Maintains Redis’s renowned speed for reads and writes.</li>
+<li>Durability: Combines in-memory performance with multi-AZ replication and snapshot backups, ensuring data durability.</li>
+<li>Managed Service: AWS handles the operational aspects, allowing us to focus on application development.</li>
+</ul>
+<h4 id="disadvantages-2">
+Disadvantages:
+<a href="#disadvantages-2" class="heading-anchor">#</a>
+</h4>
+<ul>
+<li>Cost: MemoryDB can be more expensive compared to other options like ElastiCache due to its enhanced features.</li>
+<li>Newer Service: Being relatively newer, it may have fewer integrations and a smaller community compared to established services like ElastiCache and DynamoDB.</li>
+</ul>
+<h4 id="pricing-details-2">
+Pricing Details:
+<a href="#pricing-details-2" class="heading-anchor">#</a>
+</h4>
+<ul>
+<li>Instance Pricing: Generally higher than ElastiCache. For example:
+<ul>
+<li>db.r6gd.2xlarge: Approximately $1.50 per hour.</li>
+<li>db.r6gd.4xlarge: Approximately $3.00 per hour.</li>
+</ul>
+</li>
+<li>Additional Costs: Storage, backup, and data transfer fees apply. Snapshot backups are charged based on the amount of data stored.</li>
+</ul>
+<h2 id="making-the-decision-why-we-chose-amazon-memorydb">
+Making the Decision: Why We Chose Amazon MemoryDB
+<a href="#making-the-decision-why-we-chose-amazon-memorydb" class="heading-anchor">#</a>
+</h2>
+<p>After carefully weighing the pros and cons of each option, Amazon MemoryDB for Redis emerged as the best fit for our needs. Here’s why:</p>
+<h3 id="1-strong-consistency-with-low-latency">
+1. Strong Consistency with Low Latency
+<a href="#1-strong-consistency-with-low-latency" class="heading-anchor">#</a>
+</h3>
+<p>MemoryDB strikes the perfect balance by offering Redis’s low latency while ensuring strong consistency through ACID transactions. This alignment with our primary requirements was paramount. Unlike DynamoDB, which offers strong consistency at the cost of higher latency and complex pricing, MemoryDB maintains rapid performance without sacrificing data integrity.</p>
+<h3 id="2-managed-service-benefits">
+2. Managed Service Benefits
+<a href="#2-managed-service-benefits" class="heading-anchor">#</a>
+</h3>
+<p>By choosing a managed service, we could offload the operational complexities to AWS, ensuring high availability and automatic scaling without manual intervention. While ElastiCache also offers a managed Redis service, it falls short in providing the strong consistency guarantees that MemoryDB offers.</p>
+<h3 id="3-durability-and-reliability">
+3. Durability and Reliability
+<a href="#3-durability-and-reliability" class="heading-anchor">#</a>
+</h3>
+<p>MemoryDB’s multi-AZ replication and snapshot backups provide the durability we needed, safeguarding our data against failures without compromising on performance. DynamoDB also offers durability, but MemoryDB’s in-memory performance combined with durable storage was a better fit for our low-latency requirements.</p>
+<h3 id="4-cost-justification">
+4. Cost Justification
+<a href="#4-cost-justification" class="heading-anchor">#</a>
+</h3>
+<p>While MemoryDB is slightly pricier than alternatives like ElastiCache and DynamoDB, the benefits it offers justify the additional cost:</p>
+<ul>
+<li>Performance Efficiency: The low latency and high throughput of MemoryDB ensure a responsive user experience, which is critical for our application’s success.</li>
+<li>Operational Savings: By leveraging a managed service that ensures strong consistency and durability, we save on potential costs related to managing and maintaining data integrity manually.</li>
+<li>Scalability: As our application grows, MemoryDB provides the scalability to handle increasing loads without significant performance degradation, ensuring long-term cost-effectiveness.</li>
+</ul>
+<h3 id="5-future-proofing">
+5. Future-Proofing
+<a href="#5-future-proofing" class="heading-anchor">#</a>
+</h3>
+<p>As our application scales, MemoryDB offers the flexibility and scalability to handle increasing loads, ensuring that our database infrastructure remains robust and reliable. This future-proofing aspect is crucial for maintaining performance and reliability as user demand grows.</p>
+<h2 id="pricing-comparison-summary">
+Pricing Comparison Summary
+<a href="#pricing-comparison-summary" class="heading-anchor">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Service</th>
+          <th>Key Pricing Components</th>
+          <th>Approximate Cost Example</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>DynamoDB</td>
+          <td><strong>Read/Write Capacity Units, On-Demand Requests, Features</strong></td>
+          <td>$0.00065 per WCU-hour, $1.25 per million writes</td>
+      </tr>
+      <tr>
+          <td>ElastiCache (Redis)</td>
+          <td>Instance Types, Data Transfer, Backups</td>
+          <td>$0.034/hr (t4g.small), $0.154/hr (m6g.large)</td>
+      </tr>
+      <tr>
+          <td>MemoryDB for Redis</td>
+          <td>Instance Types, Storage, Backups, Data Transfer</td>
+          <td>$1.50/hr (db.r6gd.2xlarge), $3.00/hr (db.r6gd.4xlarge)</td>
+      </tr>
+  </tbody>
+</table>
+<p>While MemoryDB incurs higher hourly costs compared to ElastiCache and DynamoDB, the enhanced features like strong consistency, durability, and seamless scalability provide significant value that outweighs the additional expense.</p>
+<h2 id="conclusion">
+Conclusion
+<a href="#conclusion" class="heading-anchor">#</a>
+</h2>
+<p>Selecting the right distributed database involves navigating a landscape of tradeoffs between consistency, availability, performance, and cost. By thoroughly evaluating our application’s needs and understanding the strengths and limitations of each option, we successfully chose Amazon MemoryDB for Redis to power our application’s data layer. This decision ensures that we deliver a responsive and reliable user experience while leveraging the robustness and scalability of AWS’s managed services.</p>
+<p>Choosing the right database is a critical step in building scalable and reliable applications. By prioritizing our requirements and understanding the inherent tradeoffs, we set the foundation for a performant and resilient system that can grow with our needs.</p>
+</section>
+  
+  
+  
+  
+  
+    <hr>
+    <div>
+      <h3>This article is part of the series: "Large Scale Distributed Systems"</h3>
+      <ul class="list-group">
+        
+          
+            <li class="list-group-item active">
+              Part 1: Choosing the Right Distributed Database: Balancing Consistency, Performance, and Cost (this article)
+            </li>
+          
+        
+      </ul>
+    </div>
+  
+
+  <section><footer class="page-footer">
+<hr />
+
+<div class="previous-post" style="display:inline-block;">
+  
+  <a class="link-reverse" href="https://blog.manparvesh.com/posts/yoda-v2/?ref=footer">« Yoda V2</a>
+  
+</div>
+
+<div class="next-post", style="display:inline-block;float:right;">
+  
+</div>
+
+<ul class="page-footer-menu">
+  
+  
+  
+  
+  <li><a href="https://linkedin.com/in/manparvesh">LinkedIn</a></li>
+  
+
+  
+  <li><a href="https://github.com/manparvesh">GitHub</a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+    <li><a href="https://manparvesh.com"> Webpage</a></li>
+  
+</ul>
+
+
+
+
+<div class="copyright">
+<p>
+  
+  Copyright 2024 Man Parvesh Singh Randhawa
+  
+</p>
+</div>
+
+
+</footer>
+</section>
+  <section><nav class="menu">
+    <ul>
+    
+        <li><a href="https://blog.manparvesh.com/">Home</a></li>
+    
+        <li><a href="https://blog.manparvesh.com/posts/">Posts</a></li>
+    
+        <li><a href="https://blog.manparvesh.com/series/">Series</a></li>
+    
+        <li><a href="https://blog.manparvesh.com/tags/">Tags</a></li>
+    
+        <li><a href="https://blog.manparvesh.com/about/">About</a></li>
+    
+    </ul>
+</nav>
+</section>
+  <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "manparvesh" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</article>
+
+
+
+
+
+</body>
+
+</html>
