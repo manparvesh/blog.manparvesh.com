@@ -1,10 +1,11 @@
 {{ if .Params.series }}
   {{ $seriesName := index .Params.series 0 }}
-  {{ $series := index .Site.Taxonomies.series (urlize $seriesName) }}
-  {{ if gt (len $series.Pages) 0 }}
+  {{ $normalizedSeriesName := urlize $seriesName }}
+  {{ $series := index .Site.Taxonomies.series $normalizedSeriesName }}
+  {{ if and $series (gt (len $series.Pages) 0) }}
     <hr>
     <div>
-      <h3>This article is a part of the series: "{{ $seriesName }}"</h3>
+      <h3>This article is part of the series: "{{ replace $seriesName "-" " " | title }}"</h3>
       <ul class="list-group">
         {{ range $num, $post := $series.Pages.ByDate }}
           {{ if eq $post.Permalink $.Page.Permalink }}

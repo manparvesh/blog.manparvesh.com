@@ -8,8 +8,8 @@ math: false
 toc: true
 hideDate: false
 hideReadTime: false
-series: ["Research in Distributed Computing"]
-tags: []
+series: ["Research-in-Distributed-Computing"]
+tags: [hello]
 draft: false
 description: "How we trade off consistency while choosing a distributed database"
 ---
