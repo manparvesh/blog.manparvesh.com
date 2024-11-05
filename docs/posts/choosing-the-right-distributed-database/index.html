@@ -72,7 +72,7 @@
 
 <article id="main">
   <section>
-<h1 class="content-title">Choosing the Right Distributed Database: Balancing Consistency, Performance, and Cost</h1><p class=subtitle>Navigating the tradeoffs in Distributed Databases to choose a solution that provides low-latency and strong consistency</p><span class="content-meta"><p class="author">✍️ Man Parvesh Singh Randhawa</p><span class="date">📆 3 Nov, 2024&nbsp;</span><span>🕒 6 min&nbsp;</span><span>🏷️<a href="https://blog.manparvesh.com/tags/distributed-computing">distributed-computing</a>&nbsp;<a href="https://blog.manparvesh.com/tags/distributed-database">distributed-database</a>&nbsp;<a href="https://blog.manparvesh.com/tags/redis">redis</a>&nbsp;</span></span></section>
+<h1 class="content-title">Choosing the Right Distributed Database: Balancing Consistency, Performance, and Cost</h1><p class=subtitle>Navigating the tradeoffs in Distributed Databases to choose a solution that provides low-latency and strong consistency</p><span class="content-meta"><p class="author">✍️ Man Parvesh Singh Randhawa</p><span class="date">📆 3 Nov, 2024&nbsp;&nbsp</span><span>🕒 3 min&nbsp;&nbsp</span><span>🏷️<a href="https://blog.manparvesh.com/tags/distributed-computing">distributed-computing</a>&nbsp;<a href="https://blog.manparvesh.com/tags/distributed-database">distributed-database</a>&nbsp;<a href="https://blog.manparvesh.com/tags/redis">redis</a>&nbsp;</span></span></section>
 
   
 <section>
@@ -80,29 +80,19 @@
     <summary>Table of Contents</summary>
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#understanding-consistency-in-distributed-databases">Understanding Consistency in Distributed Databases</a>
+    <li><a href="#our-requirements">Our Requirements</a>
       <ul>
-        <li><a href="#the-cap-theorem">The CAP Theorem</a></li>
+        <li><a href="#initial-thoughts-based-on-the-requirements">Initial thoughts based on the requirements</a></li>
       </ul>
     </li>
-    <li><a href="#our-requirements">Our requirements</a></li>
-    <li><a href="#evaluating-aws-distributed-database-options">Evaluating AWS Distributed Database Options</a>
+    <li><a href="#evaluating-aws-solutions">Evaluating AWS solutions</a>
       <ul>
-        <li><a href="#amazon-dynamodb">Amazon DynamoDB</a></li>
-        <li><a href="#amazon-elasticache-redis">Amazon ElastiCache (Redis)</a></li>
-        <li><a href="#amazon-memorydb-for-redis">Amazon MemoryDB for Redis</a></li>
+        <li><a href="#aws-dynamodb">AWS DynamoDB</a></li>
+        <li><a href="#aws-elasticache">AWS Elasticache</a></li>
+        <li><a href="#aws-memorydb">AWS MemoryDB</a></li>
       </ul>
     </li>
-    <li><a href="#making-the-decision-why-we-chose-amazon-memorydb">Making the Decision: Why We Chose Amazon MemoryDB</a>
-      <ul>
-        <li><a href="#1-strong-consistency-with-low-latency">1. Strong Consistency with Low Latency</a></li>
-        <li><a href="#2-managed-service-benefits">2. Managed Service Benefits</a></li>
-        <li><a href="#3-durability-and-reliability">3. Durability and Reliability</a></li>
-        <li><a href="#4-cost-justification">4. Cost Justification</a></li>
-        <li><a href="#5-future-proofing">5. Future-Proofing</a></li>
-      </ul>
-    </li>
-    <li><a href="#pricing-comparison-summary">Pricing Comparison Summary</a></li>
+    <li><a href="#making-the-decision-why-memorydb">Making the decision: Why MemoryDB?</a></li>
     <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
@@ -110,226 +100,97 @@
 </section>
 
 
-  <section><p>In today’s fast-paced digital landscape, selecting the appropriate distributed database is pivotal for building scalable and reliable applications. One of the most critical decisions revolves around balancing consistency, availability, performance, and cost. In this blog post, we explore the <strong>consistency tradeoffs in distributed databases</strong>, detailing how we navigated these challenges to select the optimal solution for our needs.</p>
-<h2 id="understanding-consistency-in-distributed-databases">
-Understanding Consistency in Distributed Databases
-<a href="#understanding-consistency-in-distributed-databases" class="heading-anchor">#</a>
-</h2>
-<p><strong>Consistency</strong> refers to the guarantee that every read receives the most recent write or an error. In distributed systems, achieving strong consistency can be challenging due to the inherent complexities of synchronizing data across multiple nodes. Balancing consistency with other factors like availability, latency, and cost is essential for building efficient and reliable applications.</p>
-<h3 id="the-cap-theorem">
-The CAP Theorem
-<a href="#the-cap-theorem" class="heading-anchor">#</a>
-</h3>
-<p>The CAP Theorem<label for="sidenote-1" class="margin-toggle sidenote-number">(1)</label>
-<input type="checkbox" id="sidenote-1" class="margin-toggle"/>
-<span class="sidenote">
-<span class="sidenote-number">(1)</span><a href="https://en.wikipedia.org/wiki/CAP_theorem" target="_blank" >https://en.wikipedia.org/wiki/CAP_theorem</a>
-</span>
-, introduced by Eric Brewer, states that a distributed data store can only provide two out of the following three guarantees simultaneously:</p>
-<ol>
-<li>Consistency: Every read receives the most recent write.</li>
-<li>Availability: Every request receives a response, without guarantee that it contains the most recent write.</li>
-<li>Partition Tolerance: The system continues to operate despite arbitrary message loss or failure of part of the system.</li>
-</ol>
-<p>Understanding this theorem is fundamental when evaluating distributed databases, as it highlights the tradeoffs that must be made based on application requirements.</p>
+  <section><p>In this blog post I will write about our thought process behind choosing a distributed database solution on AWS while looking for sub-millisecond latency and strong consistency.</p>
 <h2 id="our-requirements">
-Our requirements
+Our Requirements
 <a href="#our-requirements" class="heading-anchor">#</a>
 </h2>
-<p>When selecting a distributed database for our application, we had clear priorities:</p>
+<p>Our requirements for this database service were as follows:</p>
 <ol>
-<li>Low Latency Writes and Reads: Our application demands rapid data access and updates to ensure a seamless user experience.</li>
-<li>Strong Consistency: We required guarantees that users always see the most up-to-date data.</li>
-<li>Managed Service by AWS: Leveraging AWS managed services would reduce operational overhead and ensure scalability and reliability.</li>
-<li>Cost-Effectiveness: While performance and consistency are paramount, keeping operational costs within budget is also crucial.</li>
+<li>Sub-millisecond reads and writes: The latency metrics should be as close to an in-memory datastore as possible.</li>
+<li>Strong consistency: We required a guarantee that our clients always see the most up-to-date data.</li>
+<li>Fault tolerance: This is an internal service and several of our services depend on it, so it should be able to recover from any failure conditions in network, system, etc.</li>
+<li>Low or no operations cost: This is usually possible with AWS-managed services</li>
+<li>Scalability: We wanted this database to be easily scalable to handle our peak loads.</li>
+<li>Key-value database</li>
 </ol>
-<p>With these requirements in mind, we evaluated several AWS offerings to determine the best fit.</p>
-<h2 id="evaluating-aws-distributed-database-options">
-Evaluating AWS Distributed Database Options
-<a href="#evaluating-aws-distributed-database-options" class="heading-anchor">#</a>
+<h3 id="initial-thoughts-based-on-the-requirements">
+Initial thoughts based on the requirements
+<a href="#initial-thoughts-based-on-the-requirements" class="heading-anchor">#</a>
+</h3>
+<ol>
+<li>Some open-source options that fit our use case are for key-value database are: MongoDB, Redis, Cassandra, etc.</li>
+<li>If we want sub-millisecond latencies, only redis or redis-based solution would fit our use-case.</li>
+<li>We can deploy our own redis cluster on AWS, but that would lead to operational overhead, and it&rsquo;s pointless because of multiple redis-based solutions provided by AWS.</li>
+</ol>
+<h2 id="evaluating-aws-solutions">
+Evaluating AWS solutions
+<a href="#evaluating-aws-solutions" class="heading-anchor">#</a>
 </h2>
-<h3 id="amazon-dynamodb">
-Amazon DynamoDB
-<a href="#amazon-dynamodb" class="heading-anchor">#</a>
+<h3 id="aws-dynamodb">
+AWS DynamoDB
+<a href="#aws-dynamodb" class="heading-anchor">#</a>
 </h3>
-<h4 id="advantages">
-Advantages
-<a href="#advantages" class="heading-anchor">#</a>
-</h4>
-<ul>
-<li>Fully Managed: DynamoDB handles setup, maintenance, and scaling automatically.</li>
-<li>High Availability: Designed for 99.999% availability.</li>
-<li>Scalability: Seamlessly scales to handle large volumes of traffic.</li>
-<li>Flexible Pricing: Offers on-demand and provisioned capacity modes to match varying workloads.</li>
-</ul>
-<h4 id="disadvantages">
-Disadvantages:
-<a href="#disadvantages" class="heading-anchor">#</a>
-</h4>
-<ul>
-<li>Eventual Consistency by Default: While DynamoDB offers strong consistency options, they come at the cost of higher latency and throughput limitations.</li>
-<li>Complex Pricing: Costs can escalate with increased read/write capacity and additional features like DynamoDB Streams.</li>
-</ul>
-<h4 id="pricing-details">
-Pricing Details:
-<a href="#pricing-details" class="heading-anchor">#</a>
-</h4>
-<ul>
-<li>Provisioned Capacity Mode: Charged based on the number of read and write capacity units. As of the latest pricing:
-<ul>
-<li>Write Capacity Unit (WCU): $0.00065 per WCU-hour.</li>
-<li>Read Capacity Unit (RCU): $0.00013 per RCU-hour.</li>
-</ul>
-</li>
-<li>On-Demand Capacity Mode: Pay-per-request pricing:
-<ul>
-<li>Write Request Unit: $1.25 per million writes.</li>
-<li>Read Request Unit: $0.25 per million reads.</li>
-</ul>
-</li>
-<li>Additional Costs: Features like Global Tables, Streams, and backups incur extra charges.</li>
-</ul>
-<h3 id="amazon-elasticache-redis">
-Amazon ElastiCache (Redis)
-<a href="#amazon-elasticache-redis" class="heading-anchor">#</a>
+<p>DynamoDB<label for="sidenote-1" class="margin-toggle sidenote-number">(1)</label>
+<input type="checkbox" id="sidenote-1" class="margin-toggle"/>
+<span class="sidenote">
+<span class="sidenote-number">(1)</span><a href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf" target="_blank" >https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf</a>
+</span>
+ is an incredible key-value database solution provided by AWS. It&rsquo;s highly reliable and performant.</p>
+<p>However, it cannot compare to ultra-low latencies provided by redis-based solutions. And the linked paper mentions that DynamoDB sacrifices consistency for availability<label for="sidenote-2" class="margin-toggle sidenote-number">(2)</label>
+<input type="checkbox" id="sidenote-2" class="margin-toggle"/>
+<span class="sidenote">
+<span class="sidenote-number">(2)</span>it supports eventual consistency, which is achieved using a shared transaction log service
+</span>
+, which is not good enough for our application.</p>
+<p>The above shortcomings are also true for similar solutions provided by AWS, such as AWS DocumentDB (which is based on MongoDB).</p>
+<h3 id="aws-elasticache">
+AWS Elasticache
+<a href="#aws-elasticache" class="heading-anchor">#</a>
 </h3>
-<h4 id="advantages-1">
-Advantages:
-<a href="#advantages-1" class="heading-anchor">#</a>
-</h4>
-<ul>
-<li>Low Latency: Redis is renowned for its lightning-fast read and write operations, ideal for applications requiring real-time data access.</li>
-<li>Versatility: Supports various data structures, making it suitable for a wide range of use cases.</li>
-<li>Managed Service: ElastiCache handles maintenance, patching, and scaling.</li>
-</ul>
-<h4 id="disadvantages-1">
-Disadvantages:
-<a href="#disadvantages-1" class="heading-anchor">#</a>
-</h4>
-<ul>
-<li>Consistency Challenges: Redis, particularly when used in a distributed setup, can face challenges in maintaining strong consistency across nodes.</li>
-<li>Persistence Limitations: While Redis supports persistence, it’s primarily an in-memory store, which might not be ideal for all use cases requiring durable storage.</li>
-</ul>
-<h4 id="pricing-details-1">
-Pricing Details:
-<a href="#pricing-details-1" class="heading-anchor">#</a>
-</h4>
-<ul>
-<li>Instance Pricing: Varies based on instance type and region. For example:
-<ul>
-<li>Cache.t4g.small: Approximately $0.034 per hour.</li>
-<li>Cache.m6g.large: Approximately $0.154 per hour.</li>
-</ul>
-</li>
-<li>Additional Costs: Data transfer, backups, and replication may incur extra charges.</li>
-</ul>
-<h3 id="amazon-memorydb-for-redis">
-Amazon MemoryDB for Redis
-<a href="#amazon-memorydb-for-redis" class="heading-anchor">#</a>
+<p>Elasticache<label for="sidenote-3" class="margin-toggle sidenote-number">(3)</label>
+<input type="checkbox" id="sidenote-3" class="margin-toggle"/>
+<span class="sidenote">
+<span class="sidenote-number">(3)</span><a href="https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/amazon-elasticache-overview.html" target="_blank" >https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/amazon-elasticache-overview.html</a>
+</span>
+ is another solution provided by AWS that uses Redis<label for="sidenote-4" class="margin-toggle sidenote-number">(4)</label>
+<input type="checkbox" id="sidenote-4" class="margin-toggle"/>
+<span class="sidenote">
+<span class="sidenote-number">(4)</span>it also provides an option to use memcached as its engine, but we focus on redis in this post
+</span>
+ and promises sub-millisecond latencies for reads and writes.</p>
+<p>While it&rsquo;s an incredible option, its only (and biggest) downside is that it does not provide any guarantees on the consistency of our data.</p>
+<p>&hellip; and so we continue looking at other available services we can use.</p>
+<h3 id="aws-memorydb">
+AWS MemoryDB
+<a href="#aws-memorydb" class="heading-anchor">#</a>
 </h3>
-<h4 id="advantages-2">
-Advantages:
-<a href="#advantages-2" class="heading-anchor">#</a>
-</h4>
-<ul>
-<li>Strong Consistency: MemoryDB provides ACID transactions, ensuring strong consistency across distributed nodes.</li>
-<li>Low Latency: Maintains Redis’s renowned speed for reads and writes.</li>
-<li>Durability: Combines in-memory performance with multi-AZ replication and snapshot backups, ensuring data durability.</li>
-<li>Managed Service: AWS handles the operational aspects, allowing us to focus on application development.</li>
-</ul>
-<h4 id="disadvantages-2">
-Disadvantages:
-<a href="#disadvantages-2" class="heading-anchor">#</a>
-</h4>
-<ul>
-<li>Cost: MemoryDB can be more expensive compared to other options like ElastiCache due to its enhanced features.</li>
-<li>Newer Service: Being relatively newer, it may have fewer integrations and a smaller community compared to established services like ElastiCache and DynamoDB.</li>
-</ul>
-<h4 id="pricing-details-2">
-Pricing Details:
-<a href="#pricing-details-2" class="heading-anchor">#</a>
-</h4>
-<ul>
-<li>Instance Pricing: Generally higher than ElastiCache. For example:
-<ul>
-<li>db.r6gd.2xlarge: Approximately $1.50 per hour.</li>
-<li>db.r6gd.4xlarge: Approximately $3.00 per hour.</li>
-</ul>
-</li>
-<li>Additional Costs: Storage, backup, and data transfer fees apply. Snapshot backups are charged based on the amount of data stored.</li>
-</ul>
-<h2 id="making-the-decision-why-we-chose-amazon-memorydb">
-Making the Decision: Why We Chose Amazon MemoryDB
-<a href="#making-the-decision-why-we-chose-amazon-memorydb" class="heading-anchor">#</a>
+<p>MemoryDB<label for="sidenote-5" class="margin-toggle sidenote-number">(5)</label>
+<input type="checkbox" id="sidenote-5" class="margin-toggle"/>
+<span class="sidenote">
+<span class="sidenote-number">(5)</span><a href="https://www.amazon.science/publications/amazon-memorydb-a-fast-and-durable-memory-first-cloud-database" target="_blank" >https://www.amazon.science/publications/amazon-memorydb-a-fast-and-durable-memory-first-cloud-database</a>
+</span>
+ is another solution that is designed for high durability and in-memory performance. It is fully compatible with redis and provides single-digit millisecond writes and microsecond-scale read latencies, strong consistency and high durability.</p>
+<p>The only downside for it might be its cost being slightly higher than the other solutions, but since the other solutions are unable to provide us strong consistency, we can&rsquo;t really use them regardless.</p>
+<p>You know what this means..</p>
+<p>🥁 We will be using <strong>MemoryDB</strong> for our service as it seems to be the best fit for our requirements!</p>
+<h2 id="making-the-decision-why-memorydb">
+Making the decision: Why MemoryDB?
+<a href="#making-the-decision-why-memorydb" class="heading-anchor">#</a>
 </h2>
-<p>After carefully weighing the pros and cons of each option, Amazon MemoryDB for Redis emerged as the best fit for our needs. Here’s why:</p>
-<h3 id="1-strong-consistency-with-low-latency">
-1. Strong Consistency with Low Latency
-<a href="#1-strong-consistency-with-low-latency" class="heading-anchor">#</a>
-</h3>
-<p>MemoryDB strikes the perfect balance by offering Redis’s low latency while ensuring strong consistency through ACID transactions. This alignment with our primary requirements was paramount. Unlike DynamoDB, which offers strong consistency at the cost of higher latency and complex pricing, MemoryDB maintains rapid performance without sacrificing data integrity.</p>
-<h3 id="2-managed-service-benefits">
-2. Managed Service Benefits
-<a href="#2-managed-service-benefits" class="heading-anchor">#</a>
-</h3>
-<p>By choosing a managed service, we could offload the operational complexities to AWS, ensuring high availability and automatic scaling without manual intervention. While ElastiCache also offers a managed Redis service, it falls short in providing the strong consistency guarantees that MemoryDB offers.</p>
-<h3 id="3-durability-and-reliability">
-3. Durability and Reliability
-<a href="#3-durability-and-reliability" class="heading-anchor">#</a>
-</h3>
-<p>MemoryDB’s multi-AZ replication and snapshot backups provide the durability we needed, safeguarding our data against failures without compromising on performance. DynamoDB also offers durability, but MemoryDB’s in-memory performance combined with durable storage was a better fit for our low-latency requirements.</p>
-<h3 id="4-cost-justification">
-4. Cost Justification
-<a href="#4-cost-justification" class="heading-anchor">#</a>
-</h3>
-<p>While MemoryDB is slightly pricier than alternatives like ElastiCache and DynamoDB, the benefits it offers justify the additional cost:</p>
 <ul>
-<li>Performance Efficiency: The low latency and high throughput of MemoryDB ensure a responsive user experience, which is critical for our application’s success.</li>
-<li>Operational Savings: By leveraging a managed service that ensures strong consistency and durability, we save on potential costs related to managing and maintaining data integrity manually.</li>
-<li>Scalability: As our application grows, MemoryDB provides the scalability to handle increasing loads without significant performance degradation, ensuring long-term cost-effectiveness.</li>
+<li>Strong consistency: provides ACID transactions (accomplished using a distributed transaction log service)</li>
+<li>Low latency: Maintains Redis&rsquo;s renowned speed for reads, and provides single-digit writes</li>
+<li>Durability: Provides 11 9s of durability guarantee</li>
+<li>AWS-managed service: Means low operational overload and easier scaling</li>
+<li><strong>Cost Justification</strong>: While MemoryDB is slightly pricier than its alternatives, the benefits it offers justify the additional cost.</li>
 </ul>
-<h3 id="5-future-proofing">
-5. Future-Proofing
-<a href="#5-future-proofing" class="heading-anchor">#</a>
-</h3>
-<p>As our application scales, MemoryDB offers the flexibility and scalability to handle increasing loads, ensuring that our database infrastructure remains robust and reliable. This future-proofing aspect is crucial for maintaining performance and reliability as user demand grows.</p>
-<h2 id="pricing-comparison-summary">
-Pricing Comparison Summary
-<a href="#pricing-comparison-summary" class="heading-anchor">#</a>
-</h2>
-<table>
-  <thead>
-      <tr>
-          <th>Service</th>
-          <th>Key Pricing Components</th>
-          <th>Approximate Cost Example</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>DynamoDB</td>
-          <td><strong>Read/Write Capacity Units, On-Demand Requests, Features</strong></td>
-          <td>$0.00065 per WCU-hour, $1.25 per million writes</td>
-      </tr>
-      <tr>
-          <td>ElastiCache (Redis)</td>
-          <td>Instance Types, Data Transfer, Backups</td>
-          <td>$0.034/hr (t4g.small), $0.154/hr (m6g.large)</td>
-      </tr>
-      <tr>
-          <td>MemoryDB for Redis</td>
-          <td>Instance Types, Storage, Backups, Data Transfer</td>
-          <td>$1.50/hr (db.r6gd.2xlarge), $3.00/hr (db.r6gd.4xlarge)</td>
-      </tr>
-  </tbody>
-</table>
-<p>While MemoryDB incurs higher hourly costs compared to ElastiCache and DynamoDB, the enhanced features like strong consistency, durability, and seamless scalability provide significant value that outweighs the additional expense.</p>
 <h2 id="conclusion">
 Conclusion
 <a href="#conclusion" class="heading-anchor">#</a>
 </h2>
-<p>Selecting the right distributed database involves navigating a landscape of tradeoffs between consistency, availability, performance, and cost. By thoroughly evaluating our application’s needs and understanding the strengths and limitations of each option, we successfully chose Amazon MemoryDB for Redis to power our application’s data layer. This decision ensures that we deliver a responsive and reliable user experience while leveraging the robustness and scalability of AWS’s managed services.</p>
-<p>Choosing the right database is a critical step in building scalable and reliable applications. By prioritizing our requirements and understanding the inherent tradeoffs, we set the foundation for a performant and resilient system that can grow with our needs.</p>
+<p>We will run load tests to derive the exact number for the provided write latency (which is supposed to be single-digit milliseconds). If it&rsquo;s a high number, then we might have to reconsider our design and consider sacrificing consistency and using Elasticache.</p>
+<p>For now, we are happy that we have a seemingly viable solution for our service.</p>
 </section>
   
   

@@ -13,11 +13,11 @@
   {{- end -}}
 
   {{- if not .Params.hidedate -}}
-  <span class="date">📆 {{ .Date.Format "2 Jan, 2006" }}&nbsp;</span>
+  <span class="date">📆 {{ .Date.Format "2 Jan, 2006" }}&nbsp;&nbsp</span>
   {{- end -}}
 
   {{- if not .Params.hidereadtime -}}
-  <span>🕒 {{ .ReadingTime }} min&nbsp;</span>
+  <span>🕒 {{ .ReadingTime }} min&nbsp;&nbsp</span>
   {{- end -}}
 
   {{- if .Params.tags -}}
