@@ -1,9 +1,9 @@
 {
 	"version": 3,
 	"file": "hugo-tufte.min.css",
-	"sourceRoot": "/Users/manparvesh/work/blog.manparvesh.com/exampleSite",
+	"sourceRoot": "/Users/mnprvsh/work/blog.manparvesh.com/exampleSite",
 	"sources": [
-		"/Users/manparvesh/work/blog.manparvesh.com/assets/scss/hugo-tufte.scss",
+		"/Users/mnprvsh/work/blog.manparvesh.com/assets/scss/hugo-tufte.scss",
 		"../assets/scss/tufte.scss",
 		"../assets/scss/general.scss",
 		"../assets/scss/pages/footer.scss",

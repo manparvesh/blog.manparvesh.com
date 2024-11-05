@@ -26,6 +26,8 @@ markup:
 services:
   disqus:
     shortname: manparvesh
+  googleAnalytics:
+    ID: G-2HBXT7KT6V
 
 params:
   # Subtitle of the website
