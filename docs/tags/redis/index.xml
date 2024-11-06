@@ -6,8 +6,15 @@
     <description>Recent content in Redis on Man Parvesh&#39;s Tech Shenanigans</description>
     <generator>Hugo</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 03 Nov 2024 19:04:25 -0800</lastBuildDate>
+    <lastBuildDate>Tue, 05 Nov 2024 21:39:14 -0800</lastBuildDate>
     <atom:link href="https://blog.manparvesh.com/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Paper Summary: AWS MemoryDB</title>
+      <link>https://blog.manparvesh.com/posts/aws-memorydb/</link>
+      <pubDate>Tue, 05 Nov 2024 21:39:14 -0800</pubDate>
+      <guid>https://blog.manparvesh.com/posts/aws-memorydb/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;Abstract&lt;/strong&gt;: Amazon MemoryDB for Redis is a database service designed for&#xA;11 9s of durability with in-memory performance. In this paper, we&#xA;describe the architecture of MemoryDB and how we leverage opensource Redis, a popular data structure store, to build an enterprise grade cloud database. MemoryDB offloads durability concerns to&#xA;a separate low-latency, durable transaction log service, allowing&#xA;us to scale performance, availability, and durability independently&#xA;from the in-memory execution engine. We describe how, using this&#xA;architecture, we are able to remain fully compatible with Redis,&#xA;while providing single-digit millisecond write and microsecondscale read latencies, strong consistency, and high availability. MemoryDB launched in 2021.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Choosing the Right Distributed Database: Balancing Consistency, Performance, and Cost</title>
       <link>https://blog.manparvesh.com/posts/choosing-the-right-distributed-database/</link>

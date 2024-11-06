@@ -2,10 +2,10 @@
 title: "Paper Summary: AWS MemoryDB"
 subtitle: Summary of the scientific paper on AWS MemoryDB
 author: Man Parvesh Singh Randhawa
-date: "2024-11-04T21:39:14-08:00"
+date: "2024-11-05T21:39:14-08:00"
 meta: true
 math: true
-toc: false
+toc: true
 hideDate: false
 hideReadTime: false
 series: [paper-summaries]
@@ -84,28 +84,57 @@ key level.
 
 ### 4.1. Leader Election
 
+Leader election is built on top of the transaction service, which leads to the following benefits:
+1. Liveness improvement over Redis cluster bus leader election
+2. Strengthens consistency by strictly ensuring a single primary throughout failures including split-brain scenarios. A replica cannot become primary if it isn't up-to-date with the latest data.
+3. Usage of the *append* API offered by the transaction log and its consistency property simplifies the overall design and maintenance of MemoryDB.
+
 ### 4.2. Recovery
+
+#### 4.2.1. Data restoration
+
+Redis internal data synchronization APIs are leveraged. During a failure scenario:
+1. A replica loads a recent point-in-time snapshot
+2. Replays subsequent transaction
+
+MemoryDB periodically creates snapshots and stores in S3 for each replica independently.
+
+#### 4.2.2. Off-box snapshotting:
+Snapshots are taken of the in-memory data using the copy-on-write virtual memory management technique provided by the OS. A child process captures a point-in-time status of the data set and serializes into a snapshot file, asynchronously from the main process.
+
+This can be CPU and memory-intensive, so MemoryDB uses separate replica machines for snapshotting that are not visible to consumers - so they can fully utilize the compute resources of these replicas.
 
 ## 5. Management Operations
 
 ### 5.1. Cluster Management
 
+A multi-tenant control plane service manages a fleet of single-tenant clusters on behalf of customers. It spins up all the resources required for a customer cluster, like EC2 instances, keys insite KMS, network ACLs inside the provided VPC, etc.
+
 ### 5.2. Scaling
 
-## 6. Evaluation
+Rolling N+1 upgrade process is used: new nodes running with new software are provisioned one by one.
 
-## 7. Validating and Maintaining Consistency at Scale
+## 6. Validating and Maintaining Consistency at Scale
 
-### 7.1. Consistency During Upgrades
+### 6.1. Consistency During Upgrades
 
-### 7.2. Verifying Correctness
+N+1 rolling stragegy is used to maintian availability during upgrades. Replicas are replaced first and primary in the end.
 
-## 8. Related work
+To avoid failures during upgrades that might introduce new commands or similar changes, if a replica with an older engine version observes a replication stream originating from a newer version than what it's currently running, it stops consuming the transaction log.
 
-### 8.1. Disaggregated databases
+### 6.2. Verifying Correctness
 
-### 8.2. Log-based Replication
+#### 6.2.1. Snapshots
 
-### 8.3. In-memory databases
+All snapshots generate a checksum, and so does the transaction log - for the data stored. An off-box machine verifies that these checksums are the same, and only the correct replicas are made available to the customers.
 
-## 9. Conclusion
+#### 6.2.2. Consistency
+
+Formal methods were used to check all components. S3 uses lightweight formal methods and TLA+. The internal transaction log service is verified using TLA+. MemoryDB is verified using P.{{<sidenote>}}I'm unfamiliar with all of these methods at the time of writing this article. Will read about these some day.{{</sidenote>}}
+
+## 7. My thoughts on this paper
+
+1. MemoryDB is a strong solution for developers who are looking for a database solution that provides in-memory speeds and don't want to compromise on consistency and durability.
+1. The transaction log service seems to be an amazing solution that powers several AWS systems. Would be great to read a paper on it some day.
+2. I'm curious to know what is the exact number for the write latency (the paper mentions single-digit milliseconds)
+3. Would be interesting to read about the formal correctness strategy for such systems.

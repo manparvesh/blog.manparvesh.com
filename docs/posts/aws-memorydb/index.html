@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+<title>Paper Summary: AWS MemoryDB - Man Parvesh&#39;s Tech Shenanigans</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description"
+    content="Abstract: Amazon MemoryDB for Redis is a database service designed for
+11 9s of durability with in-memory performance. In this paper, we
+describe the architecture of MemoryDB and how we leverage opensource Redis, a popular data structure store, to build an enterprise grade cloud database. MemoryDB offloads durability concerns to
+a separate low-latency, durable transaction log service, allowing
+us to scale performance, availability, and durability independently
+from the in-memory execution engine. We describe how, using this
+architecture, we are able to remain fully compatible with Redis,
+while providing single-digit millisecond write and microsecondscale read latencies, strong consistency, and high availability. MemoryDB launched in 2021. ">
+<link rel="canonical" href="https://blog.manparvesh.com/posts/aws-memorydb/" />
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://blog.manparvesh.com//index.xml"
+      title="Man Parvesh&#39;s Tech Shenanigans">
+
+
+<link rel="icon" href="https://blog.manparvesh.com/favicon.ico" />
+
+
+<link rel="apple-touch-icon" href="https://blog.manparvesh.com/touch-icon.png" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.1.0/modern-normalize.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+
+
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Noto+Emoji&display=swap" />
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Noto+Emoji&display=swap"
+      media="print" onload="this.media='all'" />
+<noscript>
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap" />
+</noscript>
+
+
+
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-2HBXT7KT6V"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-2HBXT7KT6V');
+        }
+      </script>
+
+
+<link rel="stylesheet" href="https://blog.manparvesh.com/css/hugo-tufte.min.css">
+
+
+
+<link rel="stylesheet" href="https://blog.manparvesh.com/css/hugo-tufte-options.min.css">
+
+<link rel="stylesheet" href="https://blog.manparvesh.com/css/hugo-tufte-override.css">
+
+</head>
+<body>
+
+
+<article id="main">
+  <section>
+<h1 class="content-title">Paper Summary: AWS MemoryDB</h1><p class=subtitle>Summary of the scientific paper on AWS MemoryDB</p><span class="content-meta"><p class="author">✍️ Man Parvesh Singh Randhawa</p><span class="date">📆 5 Nov, 2024&nbsp;&nbsp</span><span>🕒 6 min&nbsp;&nbsp</span><span>🏷️<a href="https://blog.manparvesh.com/tags/distributed-database">distributed-database</a>&nbsp;<a href="https://blog.manparvesh.com/tags/redis">redis</a>&nbsp;</span></span></section>
+
+  
+<section>
+  <details closed class="toc">
+    <summary>Table of Contents</summary>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-origin-story">1. Origin Story</a></li>
+    <li><a href="#2-redis-arhitecture-and-limitations">2. Redis Arhitecture and Limitations</a>
+      <ul>
+        <li><a href="#21-architecture">2.1. Architecture</a></li>
+        <li><a href="#22-challenges-of-maintaining-durability-and-consistency">2.2. Challenges of Maintaining Durability and Consistency</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-achieving-durability-and-consistency">3. Achieving Durability and Consistency</a>
+      <ul>
+        <li><a href="#31-decoupling-durability">3.1. Decoupling Durability</a></li>
+        <li><a href="#32-maintaining-consistency">3.2. Maintaining Consistency</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-availability-recovery-and-resilience">4. Availability, Recovery and Resilience</a>
+      <ul>
+        <li><a href="#41-leader-election">4.1. Leader Election</a></li>
+        <li><a href="#42-recovery">4.2. Recovery</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-management-operations">5. Management Operations</a>
+      <ul>
+        <li><a href="#51-cluster-management">5.1. Cluster Management</a></li>
+        <li><a href="#52-scaling">5.2. Scaling</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-validating-and-maintaining-consistency-at-scale">6. Validating and Maintaining Consistency at Scale</a>
+      <ul>
+        <li><a href="#61-consistency-during-upgrades">6.1. Consistency During Upgrades</a></li>
+        <li><a href="#62-verifying-correctness">6.2. Verifying Correctness</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-my-thoughts-on-this-paper">7. My thoughts on this paper</a></li>
+  </ul>
+</nav>
+  </details>
+</section>
+
+
+  <section><p><strong>Abstract</strong>: Amazon MemoryDB for Redis is a database service designed for
+11 9s of durability with in-memory performance. In this paper, we
+describe the architecture of MemoryDB and how we leverage opensource Redis, a popular data structure store, to build an enterprise grade cloud database. MemoryDB offloads durability concerns to
+a separate low-latency, durable transaction log service, allowing
+us to scale performance, availability, and durability independently
+from the in-memory execution engine. We describe how, using this
+architecture, we are able to remain fully compatible with Redis,
+while providing single-digit millisecond write and microsecondscale read latencies, strong consistency, and high availability. MemoryDB launched in 2021.</p>
+<p>Paper link: <a href="https://www.amazon.science/publications/amazon-memorydb-a-fast-and-durable-memory-first-cloud-database" target="_blank" >https://www.amazon.science/publications/amazon-memorydb-a-fast-and-durable-memory-first-cloud-database</a>
+</p>
+<h2 id="1-origin-story">
+1. Origin Story
+<a href="#1-origin-story" class="heading-anchor">#</a>
+</h2>
+<p>For several applications that require fast response time, we use in-memory databases like Redis. AWS provides AWS Elasticache that runs redis, but it does not provide any guarantees for durability and consistency. So several AWS customers had to build their own complex pipelines to handle data loss in case of any failures.</p>
+<p>MemoryDB was built to provide in-memory performance with durability, strong consistency, and high availability</p>
+<h2 id="2-redis-arhitecture-and-limitations">
+2. Redis Arhitecture and Limitations
+<a href="#2-redis-arhitecture-and-limitations" class="heading-anchor">#</a>
+</h2>
+<h3 id="21-architecture">
+2.1. Architecture
+<a href="#21-architecture" class="heading-anchor">#</a>
+</h3>
+<p>Redis allows horizontal scaling and splits its key space into 16384 slots that are distributed across one or more shards as a part of the server setup. Each shard has a single primary and zero or more read-only replicas.</p>
+<p>Discovering lock-to-shard mapping is implemented inside client logic.</p>
+<p>Replication between primary and replica nodes is implemented as a passive logical replication<label for="sidenote-1" class="margin-toggle sidenote-number">(1)</label>
+<input type="checkbox" id="sidenote-1" class="margin-toggle"/>
+<span class="sidenote">
+<span class="sidenote-number">(1)</span>a.k.a. eventually consistent
+</span>
+.</p>
+<p>Another limitation in this architecture is that it doesn&rsquo;t allow all commands to be naively forwarded to replicas - commands that include some degree of randomization - like SPOP.</p>
+<h3 id="22-challenges-of-maintaining-durability-and-consistency">
+2.2. Challenges of Maintaining Durability and Consistency
+<a href="#22-challenges-of-maintaining-durability-and-consistency" class="heading-anchor">#</a>
+</h3>
+<p>During a failover scenario: Redis uses quorum-based approach for failure detection and new primary election. After a failover, a new primary can be elected within seconds, but the new primary might not have the most up-to-date data - because of async updates to this replica.</p>
+<p>Redis implements a few mechanisms for lightweight persistence:
+point-in-time snapshots, and an on-disk transaction log.</p>
+<h2 id="3-achieving-durability-and-consistency">
+3. Achieving Durability and Consistency
+<a href="#3-achieving-durability-and-consistency" class="heading-anchor">#</a>
+</h2>
+<p>A durable database system must ensure that once data is committed and acknowledged it can be read back. MemoryDB offloads durability by leveraging a distributed transaction log service. A transaction log provides low-latency and strongly consistent
+commits across multiple AZs.</p>
+<h3 id="31-decoupling-durability">
+3.1. Decoupling Durability
+<a href="#31-decoupling-durability" class="heading-anchor">#</a>
+</h3>
+<p>Each shard in MemoryDB uses passive replication, where a primary replicates the mutative commands it executes to its transaction log. Specifically, MemoryDB intercepts the Redis replication
+stream, chunks it into records, and sends each record to the transaction log. The replicas read the replication stream sequentially
+from the transaction log and stream it into Redis. As a result, every
+replica holds an eventually consistent copy of the data set.</p>
+<h3 id="32-maintaining-consistency">
+3.2. Maintaining Consistency
+<a href="#32-maintaining-consistency" class="heading-anchor">#</a>
+</h3>
+<p>MemoryDB provides linearizability by making propagation to the multi-AZ transaction log
+synchronous. It follows the write-behind logging principle, which replicates the effects of the executed command instead of the original command.</p>
+<p>Due to our choice of using passive replication, mutations are
+executed on a primary node before being committed into the transaction log. If a commit fails, for example due to network isolation,
+the change must not be acknowledged and must not become visible.</p>
+<p>MemoryDB adds a layer of client blocking. After a client sends a mutation, the
+reply from the mutation operation is stored in a tracker until the
+transaction log acknowledges persistence and only then sent to the
+client. Meanwhile, the Redis workloop can process other operations.
+Non-mutating operations can be executed immediately but must
+consult the tracker to determine if their results must also be delayed
+until a particular log write completes. Hazards are detected at the
+key level.</p>
+<h2 id="4-availability-recovery-and-resilience">
+4. Availability, Recovery and Resilience
+<a href="#4-availability-recovery-and-resilience" class="heading-anchor">#</a>
+</h2>
+<h3 id="41-leader-election">
+4.1. Leader Election
+<a href="#41-leader-election" class="heading-anchor">#</a>
+</h3>
+<p>Leader election is built on top of the transaction service, which leads to the following benefits:</p>
+<ol>
+<li>Liveness improvement over Redis cluster bus leader election</li>
+<li>Strengthens consistency by strictly ensuring a single primary throughout failures including split-brain scenarios. A replica cannot become primary if it isn&rsquo;t up-to-date with the latest data.</li>
+<li>Usage of the <em>append</em> API offered by the transaction log and its consistency property simplifies the overall design and maintenance of MemoryDB.</li>
+</ol>
+<h3 id="42-recovery">
+4.2. Recovery
+<a href="#42-recovery" class="heading-anchor">#</a>
+</h3>
+<h4 id="421-data-restoration">
+4.2.1. Data restoration
+<a href="#421-data-restoration" class="heading-anchor">#</a>
+</h4>
+<p>Redis internal data synchronization APIs are leveraged. During a failure scenario:</p>
+<ol>
+<li>A replica loads a recent point-in-time snapshot</li>
+<li>Replays subsequent transaction</li>
+</ol>
+<p>MemoryDB periodically creates snapshots and stores in S3 for each replica independently.</p>
+<h4 id="422-off-box-snapshotting">
+4.2.2. Off-box snapshotting:
+<a href="#422-off-box-snapshotting" class="heading-anchor">#</a>
+</h4>
+<p>Snapshots are taken of the in-memory data using the copy-on-write virtual memory management technique provided by the OS. A child process captures a point-in-time status of the data set and serializes into a snapshot file, asynchronously from the main process.</p>
+<p>This can be CPU and memory-intensive, so MemoryDB uses separate replica machines for snapshotting that are not visible to consumers - so they can fully utilize the compute resources of these replicas.</p>
+<h2 id="5-management-operations">
+5. Management Operations
+<a href="#5-management-operations" class="heading-anchor">#</a>
+</h2>
+<h3 id="51-cluster-management">
+5.1. Cluster Management
+<a href="#51-cluster-management" class="heading-anchor">#</a>
+</h3>
+<p>A multi-tenant control plane service manages a fleet of single-tenant clusters on behalf of customers. It spins up all the resources required for a customer cluster, like EC2 instances, keys insite KMS, network ACLs inside the provided VPC, etc.</p>
+<h3 id="52-scaling">
+5.2. Scaling
+<a href="#52-scaling" class="heading-anchor">#</a>
+</h3>
+<p>Rolling N+1 upgrade process is used: new nodes running with new software are provisioned one by one.</p>
+<h2 id="6-validating-and-maintaining-consistency-at-scale">
+6. Validating and Maintaining Consistency at Scale
+<a href="#6-validating-and-maintaining-consistency-at-scale" class="heading-anchor">#</a>
+</h2>
+<h3 id="61-consistency-during-upgrades">
+6.1. Consistency During Upgrades
+<a href="#61-consistency-during-upgrades" class="heading-anchor">#</a>
+</h3>
+<p>N+1 rolling stragegy is used to maintian availability during upgrades. Replicas are replaced first and primary in the end.</p>
+<p>To avoid failures during upgrades that might introduce new commands or similar changes, if a replica with an older engine version observes a replication stream originating from a newer version than what it&rsquo;s currently running, it stops consuming the transaction log.</p>
+<h3 id="62-verifying-correctness">
+6.2. Verifying Correctness
+<a href="#62-verifying-correctness" class="heading-anchor">#</a>
+</h3>
+<h4 id="621-snapshots">
+6.2.1. Snapshots
+<a href="#621-snapshots" class="heading-anchor">#</a>
+</h4>
+<p>All snapshots generate a checksum, and so does the transaction log - for the data stored. An off-box machine verifies that these checksums are the same, and only the correct replicas are made available to the customers.</p>
+<h4 id="622-consistency">
+6.2.2. Consistency
+<a href="#622-consistency" class="heading-anchor">#</a>
+</h4>
+<p>Formal methods were used to check all components. S3 uses lightweight formal methods and TLA+. The internal transaction log service is verified using TLA+. MemoryDB is verified using P.<label for="sidenote-2" class="margin-toggle sidenote-number">(2)</label>
+<input type="checkbox" id="sidenote-2" class="margin-toggle"/>
+<span class="sidenote">
+<span class="sidenote-number">(2)</span>I&rsquo;m unfamiliar with all of these methods at the time of writing this article. Will read about these some day.
+</span>
+</p>
+<h2 id="7-my-thoughts-on-this-paper">
+7. My thoughts on this paper
+<a href="#7-my-thoughts-on-this-paper" class="heading-anchor">#</a>
+</h2>
+<ol>
+<li>MemoryDB is a strong solution for developers who are looking for a database solution that provides in-memory speeds and don&rsquo;t want to compromise on consistency and durability.</li>
+<li>The transaction log service seems to be an amazing solution that powers several AWS systems. Would be great to read a paper on it some day.</li>
+<li>I&rsquo;m curious to know what is the exact number for the write latency (the paper mentions single-digit milliseconds)</li>
+<li>Would be interesting to read about the formal correctness strategy for such systems.</li>
+</ol>
+</section>
+  
+  
+  
+  
+  
+    <hr>
+    <div>
+      <h3>This article is part of the series: "Paper Summaries"</h3>
+      <ul class="list-group">
+        
+          
+            <li class="list-group-item active">
+              Part 1: Paper Summary: AWS MemoryDB (this article)
+            </li>
+          
+        
+      </ul>
+    </div>
+  
+
+  <section><footer class="page-footer">
+<hr />
+
+<div class="previous-post" style="display:inline-block;">
+  
+  <a class="link-reverse" href="https://blog.manparvesh.com/posts/choosing-the-right-distributed-database/?ref=footer">« Choosing the Right Distributed Database: Balancing...</a>
+  
+</div>
+
+<div class="next-post", style="display:inline-block;float:right;">
+  
+</div>
+
+<ul class="page-footer-menu">
+  
+  
+  
+  
+  <li><a href="https://linkedin.com/in/manparvesh">LinkedIn</a></li>
+  
+
+  
+  <li><a href="https://github.com/manparvesh">GitHub</a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+    <li><a href="https://manparvesh.com"> Webpage</a></li>
+  
+</ul>
+
+
+
+
+<div class="copyright">
+<p>
+  
+  Copyright 2024 Man Parvesh Singh Randhawa
+  
+</p>
+</div>
+
+
+</footer>
+</section>
+  <section><nav class="menu">
+    <ul>
+    
+        <li><a href="https://blog.manparvesh.com/">Home</a></li>
+    
+        <li><a href="https://blog.manparvesh.com/posts/">Posts</a></li>
+    
+        <li><a href="https://blog.manparvesh.com/series/">Series</a></li>
+    
+        <li><a href="https://blog.manparvesh.com/tags/">Tags</a></li>
+    
+        <li><a href="https://blog.manparvesh.com/about/">About</a></li>
+    
+    </ul>
+</nav>
+</section>
+  <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "manparvesh" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</article>
+
+
+
+
+
+
+
+  <script>(function(){var e,t,n,s=document.getElementsByTagName("code");for(n=0;n<s.length;){if(t=s[n],t.parentNode.tagName!=="PRE"&&t.childElementCount===0&&!t.classList.contains("nolatex")&&(e=t.textContent,/^\$[^$]/.test(e)&&/[^$]\$$/.test(e)&&(e=e.replace(/^\$/,"\\(").replace(/\$$/,"\\)"),t.textContent=e),/^\\\((.|\s)+\\\)$/.test(e)||/^\\\[(.|\s)+\\\]$/.test(e)||/^\$(.|\s)+\$$/.test(e)||/^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(e))){t.outerHTML=t.innerHTML;continue}n++}})()</script>
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="//cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="//cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            
+            
+            
+            
+            
+            
+            trust: (context) => ['\\htmlId', '\\href'].includes(context.command),
+            macros: {
+              "\\eqref": "\\href{###1}{(\\text{#1})}",
+              "\\ref": "\\href{###1}{\\text{#1}}",
+              "\\label": "\\htmlId{#1}{}"
+            }
+        });
+    });
+</script>
+
+
+
+</body>
+
+</html>
