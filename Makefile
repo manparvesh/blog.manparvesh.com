@@ -13,7 +13,7 @@ build:
 	@cd exampleSite && hugo --destination ../docs && cd .. 
 	@echo "SITE REBUILT"
 
-publish:
+publish:build
 	@git add -A
 	@git commit -m "Publishing site"
 	@git push origin HEAD
