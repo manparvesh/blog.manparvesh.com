@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Man Parvesh&#39;s Tech Shenanigans</description>
     <generator>Hugo</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 05 Nov 2024 21:39:14 -0800</lastBuildDate>
+    <lastBuildDate>Tue, 04 Feb 2025 19:34:33 -0800</lastBuildDate>
     <atom:link href="https://blog.manparvesh.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Single Screen Efficiency</title>
+      <link>https://blog.manparvesh.com/posts/single-screen-efficiency/</link>
+      <pubDate>Tue, 04 Feb 2025 19:34:33 -0800</pubDate>
+      <guid>https://blog.manparvesh.com/posts/single-screen-efficiency/</guid>
+      <description>&lt;p&gt;Until a few months ago, my work setup used to be have a laptop and 2 27-inch monitors. A screen for slack, a screen for browser, and a screen for code editor. While I used to think that it made me more efficient, it was also kind of distracting on every slack message or email.&lt;/p&gt;&#xA;&lt;p&gt;Then I tried using a single screen for all my work and being efficient at it. Here&amp;rsquo;s my setup:&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Paper Summary: AWS MemoryDB</title>
       <link>https://blog.manparvesh.com/posts/aws-memorydb/</link>
