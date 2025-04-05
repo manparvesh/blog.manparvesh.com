@@ -12,7 +12,7 @@ baseurl: "https://blog.manparvesh.com/"
 title: "Man Parvesh's Tech Shenanigans"
 canonifyurls: true
 # Number of posts per page on the home page
-paginate: 5
+paginate: 10
 
 # Only modify the following if you know what you are doing
 markup:
@@ -40,7 +40,7 @@ params:
   # Some suggestions: ⊕, 💬, 💭, 📑, 🏷, ✍, 💡, 🧐, 📎, 📌
   marginNoteInd: "💭"
   # Your name or the name of you company
-  copyright: Copyright 2024 Man Parvesh Singh Randhawa
+  copyright: Copyright 2025 Man Parvesh Singh Randhawa
   copyrightHolder: Man Parvesh Singh Randhawa
   # Show the "Powered by Hugo-Tufte and Hugo."
   showPoweredBy: false
