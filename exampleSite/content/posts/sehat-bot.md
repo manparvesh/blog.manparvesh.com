@@ -36,6 +36,34 @@ Because it's free, the bot API is well-documented and easy to build on. The inco
 
 Search for [@sehatmand_bot](https://t.me/sehatmand_bot) on Telegram. Use `/start` to register, `/daily` for check-ins, and `/weekly` for measurements.
 
+## Self-hosting this bot for yourself
+
+If you want to keep your data to yourself, you can simply run this bot on your server by following these instructions:
+
+1. Create a `.env` file with your Telegram bot token:
+```
+BOT_API_KEY=your_telegram_bot_token
+```
+2. Create an empty `app.db` file in the project root (it will be automatically initialized with required tables)
+3. Create a docker-compose.yaml file with these contents:
+```yaml
+version: "3.8"
+
+services:
+  sehat:
+    image: ghcr.io/manparvesh/sehat:main
+    container_name: sehat
+    volumes:
+      - ./app.db:/data/app.db
+    env_file:
+      - .env
+    restart: always
+```
+4. Run using Docker Compose:
+```bash
+docker compose up
+```
+
 ## Future Plans
 
 - BMI tracking
