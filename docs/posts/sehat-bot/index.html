@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-US"><head>
-<title>About the author - Man Parvesh&#39;s Tech Shenanigans</title>
+<title>I wrote a telegram bot to lose weight - Man Parvesh&#39;s Tech Shenanigans</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description"
-    content="I am Man Parvesh Singh Randhawa
-, a backend engineer at Yahoo on the Fantasy Sports team. I am highly experienced in the software engineering field, having implemented microservices and libraries and distributed multi-tenant architectures. I&rsquo;m also an open-source enthusiast, and I have created and worked on several projects that have been listed in GitHub&rsquo;s trending section.
-My educational background is in Computer Science, with a Master&rsquo;s degree from UT Dallas and a Bachelor&rsquo;s from IIT Guwahati. I have a passion for programming, and I&rsquo;m constantly looking for ways to keep my skills up to date and learn new technologies. My current goal is to develop my expertise in cloud computing and distributed systems, and I&rsquo;m actively researching the latest trends in this field. Furthermore, I am a huge proponent of open-source technologies and constantly looking for ways to contribute to the community. ">
-<link rel="canonical" href="https://blog.manparvesh.com/about/" />
+    content="Building Sehat Bot ">
+<link rel="canonical" href="https://blog.manparvesh.com/posts/sehat-bot/" />
 <link rel="alternate"
       type="application/rss+xml"
       href="https://blog.manparvesh.com//index.xml"
@@ -74,19 +72,58 @@ My educational background is in Computer Science, with a Master&rsquo;s degree f
 
 <article id="main">
   <section>
-<h1 class="content-title">About the author</h1></section>
+<h1 class="content-title">I wrote a telegram bot to lose weight</h1><p class=subtitle>Building Sehat Bot</p><span class="content-meta"><p class="author">✍️ Man Parvesh Singh Randhawa</p><span class="date">📆 4 Apr, 2025&nbsp;&nbsp</span><span>🕒 2 min&nbsp;&nbsp</span></span></section>
 
   
 
-  <section><p>I am <a href="https://manparvesh.com" target="_blank" >Man Parvesh Singh Randhawa</a>
-, a backend engineer at Yahoo on the Fantasy Sports team. I am highly experienced in the software engineering field, having implemented microservices and libraries and distributed multi-tenant architectures. I&rsquo;m also an open-source enthusiast, and I have created and worked on several projects that have been listed in GitHub&rsquo;s trending section.</p>
-<p>My educational background is in Computer Science, with a Master&rsquo;s degree from UT Dallas and a Bachelor&rsquo;s from IIT Guwahati. I have a passion for programming, and I&rsquo;m constantly looking for ways to keep my skills up to date and learn new technologies. My current goal is to develop my expertise in cloud computing and distributed systems, and I&rsquo;m actively researching the latest trends in this field. Furthermore, I am a huge proponent of open-source technologies and constantly looking for ways to contribute to the community.</p>
+  <section><p>I needed an automated solution to track my weight loss progress and keep track of my habits, so instead of searching and paying for an app, I wrote my own!</p>
+<h2 id="why-telegram">
+Why Telegram?
+<a href="#why-telegram" class="heading-anchor">#</a>
+</h2>
+<p>Because it&rsquo;s free, the bot API is well-documented and easy to build on. The incoming messages are first handled by the telegram bot infrastructure, so you can just have a small server to process incoming messages (might be slow, but works for me as there are no other users).</p>
+<h2 id="how-it-works">
+How It Works
+<a href="#how-it-works" class="heading-anchor">#</a>
+</h2>
+<p><strong>Daily Check-ins:</strong> The bot sends a 7 AM PST reminder with five yes/no questions about yesterday&rsquo;s habits. These questions are based on whether previous day you did weight training, cardio, follow the deit plan, had enough sleep (8+ hrs), and took enough steps (5k+).</p>
+<p><strong>Weekly Tracking:</strong> Every Monday, you log weight and waist measurements. The bot shows your progress over time.</p>
+<h2 id="why-this-style-of-check-ins-instead-of-a-single-weekly-checkin-with-all-details">
+Why this style of Check-ins instead of a single, weekly checkin with all details?
+<a href="#why-this-style-of-check-ins-instead-of-a-single-weekly-checkin-with-all-details" class="heading-anchor">#</a>
+</h2>
+<ol>
+<li>Consistency is important. Slowly, over the time, it makes a huge difference.</li>
+<li>Automated reminders help. With daily reminders, you keep getting reminded of your goals and that you need to stay on track.</li>
+<li>Seeing your numbers is motivating.</li>
+</ol>
+<h2 id="try-it">
+Try It
+<a href="#try-it" class="heading-anchor">#</a>
+</h2>
+<p>Search for <a href="https://t.me/sehatmand_bot" target="_blank" >@sehatmand_bot</a>
+ on Telegram. Use <code>/start</code> to register, <code>/daily</code> for check-ins, and <code>/weekly</code> for measurements.</p>
+<h2 id="future-plans">
+Future Plans
+<a href="#future-plans" class="heading-anchor">#</a>
+</h2>
+<ul>
+<li>BMI tracking</li>
+<li>Achievement streaks</li>
+<li>Better visualization</li>
+<li>Custom reminder times</li>
+</ul>
+<p>The best tracker is one you&rsquo;ll actually use - so I&rsquo;m aiming to keep using this one as much as I can, and keep improving it.</p>
+<hr>
+<p><em>&ldquo;Sehatmand&rdquo; means &ldquo;healthy&rdquo; in Punjabi/Hindi</em></p>
 </section>
   
   <section><footer class="page-footer">
 <hr />
 
 <div class="previous-post" style="display:inline-block;">
+  
+  <a class="link-reverse" href="https://blog.manparvesh.com/posts/single-screen-efficiency/?ref=footer">« Single Screen Efficiency</a>
   
 </div>
 
