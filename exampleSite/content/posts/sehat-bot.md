@@ -9,7 +9,7 @@ toc: false
 hideDate: false
 hideReadTime: false
 series: []
-tags: []
+tags: [go,telegram]
 draft: false
 description: Building Sehat Bot
 ---

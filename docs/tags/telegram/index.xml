@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Telegram on Man Parvesh&#39;s Tech Shenanigans</title>
+    <link>https://blog.manparvesh.com/tags/telegram/</link>
+    <description>Recent content in Telegram on Man Parvesh&#39;s Tech Shenanigans</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <lastBuildDate>Fri, 04 Apr 2025 23:59:47 -0700</lastBuildDate>
+    <atom:link href="https://blog.manparvesh.com/tags/telegram/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>I wrote a telegram bot to lose weight</title>
+      <link>https://blog.manparvesh.com/posts/sehat-bot/</link>
+      <pubDate>Fri, 04 Apr 2025 23:59:47 -0700</pubDate>
+      <guid>https://blog.manparvesh.com/posts/sehat-bot/</guid>
+      <description>&lt;p&gt;I needed an automated solution to track my weight loss progress and keep track of my habits, so instead of searching and paying for an app, I wrote my own!&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-telegram&#34;&gt;&#xA;Why Telegram?&#xA;&lt;a href=&#34;#why-telegram&#34; class=&#34;heading-anchor&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;p&gt;Because it&amp;rsquo;s free, the bot API is well-documented and easy to build on. The incoming messages are first handled by the telegram bot infrastructure, so you can just have a small server to process incoming messages (might be slow, but works for me as there are no other users).&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
