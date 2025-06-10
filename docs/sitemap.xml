@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://blog.manparvesh.com/posts/sehat-bot/</loc>
+    <lastmod>2025-04-04T23:59:47-07:00</lastmod>
+  </url><url>
     <loc>https://blog.manparvesh.com/tags/go/</loc>
     <lastmod>2025-04-04T23:59:47-07:00</lastmod>
   </url><url>
     <loc>https://blog.manparvesh.com/</loc>
-    <lastmod>2025-04-04T23:59:47-07:00</lastmod>
-  </url><url>
-    <loc>https://blog.manparvesh.com/posts/sehat-bot/</loc>
     <lastmod>2025-04-04T23:59:47-07:00</lastmod>
   </url><url>
     <loc>https://blog.manparvesh.com/posts/</loc>
@@ -20,13 +20,13 @@
     <loc>https://blog.manparvesh.com/tags/telegram/</loc>
     <lastmod>2025-04-04T23:59:47-07:00</lastmod>
   </url><url>
+    <loc>https://blog.manparvesh.com/posts/single-screen-efficiency/</loc>
+    <lastmod>2025-02-04T19:34:33-08:00</lastmod>
+  </url><url>
     <loc>https://blog.manparvesh.com/series/productivity/</loc>
     <lastmod>2025-02-04T19:34:33-08:00</lastmod>
   </url><url>
     <loc>https://blog.manparvesh.com/series/</loc>
-    <lastmod>2025-02-04T19:34:33-08:00</lastmod>
-  </url><url>
-    <loc>https://blog.manparvesh.com/posts/single-screen-efficiency/</loc>
     <lastmod>2025-02-04T19:34:33-08:00</lastmod>
   </url><url>
     <loc>https://blog.manparvesh.com/tags/distributed-database/</loc>

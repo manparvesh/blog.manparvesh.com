@@ -1,6 +1,6 @@
 ---
-title: "Single Screen Efficiency"
-subtitle: My single screen work setup for efficiency on MacOS
+title: "Optimizing Single-Screen Productivity on macOS"
+subtitle: Efficient Workspace Management Through Virtual Desktops
 author: Man Parvesh Singh Randhawa
 date: "2025-02-04T19:34:33-08:00"
 meta: true
@@ -11,19 +11,23 @@ hideReadTime: false
 series: [productivity]
 tags: []
 draft: false
-description: My single screen work setup for efficiency on MacOS
+description: A systematic approach to single-screen productivity using macOS virtual desktops and application segregation.
 ---
 
-Until a few months ago, my work setup used to be have a laptop and 2 27-inch monitors. A screen for slack, a screen for browser, and a screen for code editor. While I used to think that it made me more efficient, it was also kind of distracting on every slack message or email.
+I transitioned from a three-monitor setup (laptop + dual 27" displays) to single-screen productivity to reduce context switching and eliminate notification distractions. The multi-screen configuration, while seemingly efficient, created cognitive overhead through constant peripheral interruptions.
 
-Then I tried using a single screen for all my work and being efficient at it. Here's my setup:
+## Implementation Strategy
 
-![alt text](/img/divided-dock.png)
+![Divided Dock Configuration](/img/divided-dock.png)
 
-1. Always open 10 spaces on startup (Settings > Desktop and Dock > disable Automatically arrange Spaces based on recent use)
-2. Dock is divided into spaces by using a simple called vertical-bar.app which is copied 9 times and kept on the dock.
-3. Each application is assigned to a space (for each application, open it in the space you want to always open in, and right click to assign it to current space)
-4. Disable animations (Accessibility > reduce motion)
-5. Shortcuts to switch between spaces (Option + `<space-number>`) (set by: Keyboard Shortcuts > expand Mission Control > enable options like "Switch to Desktop 1", etc)
+### System Configuration
 
-This is how I have setup my work and personal devices, and helps me focus on one thing at a time and switch between applications seamlessly.
+1. **Static Desktop Management:** Disable "Automatically rearrange Spaces based on recent use" in System Settings > Desktop & Dock
+2. **Visual Dock Segmentation:** Install vertical-bar.app separators (9 instances) to create logical application groups
+3. **Application Binding:** Assign each application to dedicated spaces via right-click context menu
+4. **Animation Optimization:** Enable "Reduce motion" in Accessibility settings for faster transitions
+5. **Keyboard Navigation:** Configure `Option + [1-9]` shortcuts for instant space switching via Mission Control settings
+
+### Workflow Benefits
+
+This configuration enforces single-tasking by design, eliminating visual distractions while maintaining rapid application access through muscle memory keyboard shortcuts. The systematic approach reduces decision fatigue and improves sustained focus on primary tasks.

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en-US"><head>
-<title>Yoda V2 - Man Parvesh&#39;s Technical Journal</title>
+<title>Yoda V2: Architectural Redesign - Man Parvesh&#39;s Technical Journal</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description"
-    content="A brief history of Yoda and why I decided to rewrite it ">
+    content="Rebuilding Yoda CLI with modern architecture, plugin system, and TUI capabilities ">
 <link rel="canonical" href="https://blog.manparvesh.com/posts/yoda-v2/" />
 <link rel="alternate"
       type="application/rss+xml"
@@ -61,7 +61,7 @@
        
     }
   </style>
-  <h1 class="content-title" style="text-align: center; margin-top: 0; margin-bottom: 0;">Yoda V2</h1>
+  <h1 class="content-title" style="text-align: center; margin-top: 0; margin-bottom: 0;">Yoda V2: Architectural Redesign</h1>
   <span class="content-meta" style="text-align: center; display: block;">
     <span class="date">21 Sep, 2024&nbsp;&nbsp</span>
 
@@ -73,87 +73,54 @@
     <summary>Table of Contents</summary>
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#why-is-it-called-yoda">Why is it called Yoda</a></li>
-    <li><a href="#history-of-the-project-">History of the project 🕰️</a></li>
-    <li><a href="#uprise-">Uprise 📈</a></li>
-    <li><a href="#why-v2-after-so-long">Why V2 after so long?</a></li>
-    <li><a href="#how-is-yoda-v2-going-to-look-like">How is Yoda V2 going to look like</a></li>
-    <li><a href="#so-what-next">So, what next?</a></li>
+    <li><a href="#project-origins">Project Origins</a></li>
+    <li><a href="#evolution-and-challenges">Evolution and Challenges</a></li>
+    <li><a href="#motivation-for-v2">Motivation for V2</a></li>
+    <li><a href="#architecture-requirements">Architecture Requirements</a></li>
+    <li><a href="#implementation-strategy">Implementation Strategy</a></li>
   </ul>
 </nav>
   </details>
 </section>
 
 
-  <section>
-
-    <figure class="fullwidth">
-  
-  
-  <img src="https://github.com/yoda-pa/yoda/raw/v2/logo.png" alt="Yoda logo">
-  
-  <figcaption>
-
-
-
-
-
-
-
-  </figcaption>
-
-
-
-
-
-
-</figure>
-
-
-<h2 id="why-is-it-called-yoda">
-Why is it called Yoda
-<a href="#why-is-it-called-yoda" class="heading-anchor">#</a>
+  <section><p><img src="https://github.com/yoda-pa/yoda/raw/v2/logo.png" alt=""></p>
+<h2 id="project-origins">
+Project Origins
+<a href="#project-origins" class="heading-anchor">#</a>
 </h2>
-<p>Since Yoda was a movie character considered wise and knowledgeable, I named it Yoda and made it open source<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-<h2 id="history-of-the-project-">
-History of the project 🕰️
-<a href="#history-of-the-project-" class="heading-anchor">#</a>
+<p>Yoda was named after the wise Jedi character and developed as an open-source personal assistant CLI<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. The project began in 2017 as a learning platform for exploring various software engineering concepts through practical implementation.</p>
+<h2 id="evolution-and-challenges">
+Evolution and Challenges
+<a href="#evolution-and-challenges" class="heading-anchor">#</a>
 </h2>
-<p>I started Yoda PA as a hobby project after graduating from college and starting my first job (circa 2017). My original intention for this project was to learn how several small things in software work, so I decided to build miniature versions of everything I wanted to learn and group them under a large project—my original to-do list. As you can see, it’s a mess.</p>
-<h2 id="uprise-">
-Uprise 📈
-<a href="#uprise-" class="heading-anchor">#</a>
+<p><strong>Initial Growth:</strong> The project gained traction through community sharing, attracting international contributors and expanding functionality.</p>
+<p><strong>Technical Debt:</strong> Rapid growth without proper architectural planning led to code bloat and maintenance complexity, ultimately resulting in project suspension during my graduate studies.</p>
+<h2 id="motivation-for-v2">
+Motivation for V2
+<a href="#motivation-for-v2" class="heading-anchor">#</a>
 </h2>
-<p>As I kept working on it, I kept sharing the project and my ideas in multiple places on the internet. This led to an interest in several developers from all over the world to contribute to the project.</p>
-<p>As it grew more prominent, it became complicated for a software newbie like me to manage, and the code became too bloated. I eventually stopped working on it as I went on to pursue higher education</p>
-<h2 id="why-v2-after-so-long">
-Why V2 after so long?
-<a href="#why-v2-after-so-long" class="heading-anchor">#</a>
+<p>The resurgence of command-line tools and emergence of sophisticated TUI (Terminal User Interface) applications presents an opportunity to rebuild Yoda with modern best practices. The CLI ecosystem&rsquo;s maturation, combined with tools like Rich for enhanced output formatting, enables creation of professional-grade terminal applications.</p>
+<h2 id="architecture-requirements">
+Architecture Requirements
+<a href="#architecture-requirements" class="heading-anchor">#</a>
 </h2>
-<p>Command-line tools are making a comeback, and many excellent CLI tools are being developed. Yoda had a lot of potential to become an excellent general-purpose utility tool. I want to give it another shot at greatness and hopefully learn even more than I did the last time.
-There’s also been a recent rise in TUI apps (user interfaces inside the terminal—https://github.com/agarrharr/awesome-cli-apps), which fascinates me. I want to build something related to it, and maybe we can have Yoda plugins around it in the future.</p>
-<h2 id="how-is-yoda-v2-going-to-look-like">
-How is Yoda V2 going to look like
-<a href="#how-is-yoda-v2-going-to-look-like" class="heading-anchor">#</a>
-</h2>
+<p><strong>Core Features:</strong></p>
 <ol>
-<li>Something that’s going to be usable in daily life.</li>
-<li>Provide standard packages for multiple environments.</li>
-<li>Allow users to write plugins to allow maximum customization.</li>
-<li>In-built plugin manager</li>
-<li>Inbuilt config manager to manage plugins and other settings.</li>
-<li>Make output pretty (using tools like
-rich)</li>
-<li>Allow writing plugins in other languages (like Golang/rust for low-level stuff, etc.)</li>
-<li>Create a starter webpage for this app.</li>
-<li>Create a website with documentation on how to do contribute to the project and how to write plugins etc.</li>
+<li>Daily-use utility with practical applications</li>
+<li>Cross-platform package distribution</li>
+<li>Extensible plugin architecture with built-in manager</li>
+<li>Centralized configuration management</li>
+<li>Enhanced output formatting and visualization</li>
+<li>Multi-language plugin support (Go, Rust for performance-critical components)</li>
+<li>Comprehensive documentation and contribution guidelines</li>
 </ol>
-<h2 id="so-what-next">
-So, what next?
-<a href="#so-what-next" class="heading-anchor">#</a>
+<h2 id="implementation-strategy">
+Implementation Strategy
+<a href="#implementation-strategy" class="heading-anchor">#</a>
 </h2>
-<p>I’m open to more ideas! I will write a document that will contain more technical details on how the newer version of yoda is going to work, and write another post around it.</p>
-<p>I believe writing a design doc would give me more clarity on how to proceed with this, so that’s going to be the next step for this project. Stay tuned!</p>
+<p>The next phase involves creating a detailed technical design document to establish architectural patterns, plugin interfaces, and development workflows. This systematic approach will ensure sustainable growth and maintainable codebase architecture.</p>
+<p>Technical documentation and implementation details will be covered in subsequent posts as the project progresses.</p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
@@ -176,7 +143,7 @@ So, what next?
         
           
             <li class="list-group-item active">
-              Part 1: Yoda V2 (this article)
+              Part 1: Yoda V2: Architectural Redesign (this article)
             </li>
           
         

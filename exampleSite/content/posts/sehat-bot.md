@@ -1,6 +1,6 @@
 ---
-title: "I wrote a telegram bot to lose weight"
-subtitle: Building Sehat Bot
+title: "Building a Telegram Bot for Health Tracking"
+subtitle: Sehat Bot - Automated Health and Fitness Companion
 author: Man Parvesh Singh Randhawa
 date: "2025-04-04T23:59:47-07:00"
 meta: true
@@ -11,67 +11,56 @@ hideReadTime: false
 series: []
 tags: [go,telegram]
 draft: false
-description: Building Sehat Bot
+description: A Telegram bot for automated health tracking through daily habit check-ins and weekly biometric measurements.
 ---
 
-I needed an automated solution to track my weight loss progress and keep track of my habits, so instead of searching and paying for an app, I wrote my own!
+I built a custom Telegram bot for health tracking instead of using existing apps, providing complete control over data privacy and feature implementation.
 
 ## Why Telegram?
 
-Because it's free, the bot API is well-documented and easy to build on. The incoming messages are first handled by the telegram bot infrastructure, so you can just have a small server to process incoming messages (might be slow, but works for me as there are no other users).
+- **Free Infrastructure:** No hosting costs for bot interactions
+- **Well-documented API:** Robust development framework
+- **Minimal Server Requirements:** Telegram handles message routing
+- **Universal Access:** Cross-platform without app store dependencies
 
 ## How It Works
 
-**Daily Check-ins:** The bot sends a 7 AM PST reminder with five yes/no questions about yesterday's habits. These questions are based on whether previous day you did weight training, cardio, follow the deit plan, had enough sleep (8+ hrs), and took enough steps (5k+). 
+**Daily Check-ins:** 7 AM PST reminders for five habit metrics: weight training, cardio, diet adherence, sleep (8+ hours), and steps (5,000+).
 
-**Weekly Tracking:** Every Monday, you log weight and waist measurements. The bot shows your progress over time.
+**Weekly Measurements:** Monday check-ins for weight and waist circumference with progress tracking.
 
-## Why this style of Check-ins instead of a single, weekly checkin with all details?
+Daily engagement was chosen over weekly reporting for better habit reinforcement, goal awareness, and progress visibility.
 
-1. Consistency is important. Slowly, over the time, it makes a huge difference.
-2. Automated reminders help. With daily reminders, you keep getting reminded of your goals and that you need to stay on track.
-3. Seeing your numbers is motivating.
+## Usage
 
-## Try It
+Search [@sehatmand_bot](https://t.me/sehatmand_bot) on Telegram. Commands: `/start` to register, `/daily` for check-ins, `/weekly` for measurements, `/stats` for user history.
 
-Search for [@sehatmand_bot](https://t.me/sehatmand_bot) on Telegram. Use `/start` to register, `/daily` for check-ins, and `/weekly` for measurements.
+## Self-Hosting
 
-## Self-hosting this bot for yourself
+Deploy privately with Docker:
 
-If you want to keep your data to yourself, you can simply run this bot on your server by following these instructions:
-
-1. Create a `.env` file with your Telegram bot token:
-```
-BOT_API_KEY=your_telegram_bot_token
-```
-2. Create an empty `app.db` file in the project root (it will be automatically initialized with required tables)
-3. Create a docker-compose.yaml file with these contents:
+1. Create `.env` file: `BOT_API_KEY=your_telegram_bot_token`
+2. Create empty `app.db` file
+3. Use docker-compose.yaml:
 ```yaml
 version: "3.8"
-
 services:
   sehat:
     image: ghcr.io/manparvesh/sehat:main
-    container_name: sehat
     volumes:
       - ./app.db:/data/app.db
     env_file:
       - .env
     restart: always
 ```
-4. Run using Docker Compose:
-```bash
-docker compose up
-```
+4. Run: `docker compose up`
 
 ## Future Plans
 
-- BMI tracking
-- Achievement streaks
-- Better visualization
+- BMI tracking and trends
+- Achievement streaks  
+- Better data visualization
 - Custom reminder times
-
-The best tracker is one you'll actually use - so I'm aiming to keep using this one as much as I can, and keep improving it.
 
 ---
 *"Sehatmand" means "healthy" in Punjabi/Hindi*

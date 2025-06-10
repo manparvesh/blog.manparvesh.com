@@ -9,11 +9,11 @@
     <lastBuildDate>Fri, 04 Apr 2025 23:59:47 -0700</lastBuildDate>
     <atom:link href="https://blog.manparvesh.com/tags/telegram/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>I wrote a telegram bot to lose weight</title>
+      <title>Building a Telegram Bot for Health Tracking</title>
       <link>https://blog.manparvesh.com/posts/sehat-bot/</link>
       <pubDate>Fri, 04 Apr 2025 23:59:47 -0700</pubDate>
       <guid>https://blog.manparvesh.com/posts/sehat-bot/</guid>
-      <description>&lt;p&gt;I needed an automated solution to track my weight loss progress and keep track of my habits, so instead of searching and paying for an app, I wrote my own!&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-telegram&#34;&gt;&#xA;Why Telegram?&#xA;&lt;a href=&#34;#why-telegram&#34; class=&#34;heading-anchor&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;p&gt;Because it&amp;rsquo;s free, the bot API is well-documented and easy to build on. The incoming messages are first handled by the telegram bot infrastructure, so you can just have a small server to process incoming messages (might be slow, but works for me as there are no other users).&lt;/p&gt;</description>
+      <description>&lt;p&gt;I built a custom Telegram bot for health tracking instead of using existing apps, providing complete control over data privacy and feature implementation.&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-telegram&#34;&gt;&#xA;Why Telegram?&#xA;&lt;a href=&#34;#why-telegram&#34; class=&#34;heading-anchor&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Free Infrastructure:&lt;/strong&gt; No hosting costs for bot interactions&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Well-documented API:&lt;/strong&gt; Robust development framework&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Minimal Server Requirements:&lt;/strong&gt; Telegram handles message routing&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Universal Access:&lt;/strong&gt; Cross-platform without app store dependencies&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;how-it-works&#34;&gt;&#xA;How It Works&#xA;&lt;a href=&#34;#how-it-works&#34; class=&#34;heading-anchor&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Daily Check-ins:&lt;/strong&gt; 7 AM PST reminders for five habit metrics: weight training, cardio, diet adherence, sleep (8+ hours), and steps (5,000+).&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

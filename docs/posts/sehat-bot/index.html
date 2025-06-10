@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en-US"><head>
-<title>I wrote a telegram bot to lose weight - Man Parvesh&#39;s Technical Journal</title>
+<title>Building a Telegram Bot for Health Tracking - Man Parvesh&#39;s Technical Journal</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description"
-    content="Building Sehat Bot ">
+    content="A Telegram bot for automated health tracking through daily habit check-ins and weekly biometric measurements. ">
 <link rel="canonical" href="https://blog.manparvesh.com/posts/sehat-bot/" />
 <link rel="alternate"
       type="application/rss+xml"
@@ -61,7 +61,7 @@
        
     }
   </style>
-  <h1 class="content-title" style="text-align: center; margin-top: 0; margin-bottom: 0;">I wrote a telegram bot to lose weight</h1>
+  <h1 class="content-title" style="text-align: center; margin-top: 0; margin-bottom: 0;">Building a Telegram Bot for Health Tracking</h1>
   <span class="content-meta" style="text-align: center; display: block;">
     <span class="date">4 Apr, 2025&nbsp;&nbsp</span>
 
@@ -69,72 +69,62 @@
 </section>
   
 
-  <section><p>I needed an automated solution to track my weight loss progress and keep track of my habits, so instead of searching and paying for an app, I wrote my own!</p>
+  <section><p>I built a custom Telegram bot for health tracking instead of using existing apps, providing complete control over data privacy and feature implementation.</p>
 <h2 id="why-telegram">
 Why Telegram?
 <a href="#why-telegram" class="heading-anchor">#</a>
 </h2>
-<p>Because it&rsquo;s free, the bot API is well-documented and easy to build on. The incoming messages are first handled by the telegram bot infrastructure, so you can just have a small server to process incoming messages (might be slow, but works for me as there are no other users).</p>
+<ul>
+<li><strong>Free Infrastructure:</strong> No hosting costs for bot interactions</li>
+<li><strong>Well-documented API:</strong> Robust development framework</li>
+<li><strong>Minimal Server Requirements:</strong> Telegram handles message routing</li>
+<li><strong>Universal Access:</strong> Cross-platform without app store dependencies</li>
+</ul>
 <h2 id="how-it-works">
 How It Works
 <a href="#how-it-works" class="heading-anchor">#</a>
 </h2>
-<p><strong>Daily Check-ins:</strong> The bot sends a 7 AM PST reminder with five yes/no questions about yesterday&rsquo;s habits. These questions are based on whether previous day you did weight training, cardio, follow the deit plan, had enough sleep (8+ hrs), and took enough steps (5k+).</p>
-<p><strong>Weekly Tracking:</strong> Every Monday, you log weight and waist measurements. The bot shows your progress over time.</p>
-<h2 id="why-this-style-of-check-ins-instead-of-a-single-weekly-checkin-with-all-details">
-Why this style of Check-ins instead of a single, weekly checkin with all details?
-<a href="#why-this-style-of-check-ins-instead-of-a-single-weekly-checkin-with-all-details" class="heading-anchor">#</a>
+<p><strong>Daily Check-ins:</strong> 7 AM PST reminders for five habit metrics: weight training, cardio, diet adherence, sleep (8+ hours), and steps (5,000+).</p>
+<p><strong>Weekly Measurements:</strong> Monday check-ins for weight and waist circumference with progress tracking.</p>
+<p>Daily engagement was chosen over weekly reporting for better habit reinforcement, goal awareness, and progress visibility.</p>
+<h2 id="usage">
+Usage
+<a href="#usage" class="heading-anchor">#</a>
 </h2>
+<p>Search <a href="https://t.me/sehatmand_bot" target="_blank" >@sehatmand_bot</a>
+ on Telegram. Commands: <code>/start</code> to register, <code>/daily</code> for check-ins, <code>/weekly</code> for measurements, <code>/stats</code> for user history.</p>
+<h2 id="self-hosting">
+Self-Hosting
+<a href="#self-hosting" class="heading-anchor">#</a>
+</h2>
+<p>Deploy privately with Docker:</p>
 <ol>
-<li>Consistency is important. Slowly, over the time, it makes a huge difference.</li>
-<li>Automated reminders help. With daily reminders, you keep getting reminded of your goals and that you need to stay on track.</li>
-<li>Seeing your numbers is motivating.</li>
-</ol>
-<h2 id="try-it">
-Try It
-<a href="#try-it" class="heading-anchor">#</a>
-</h2>
-<p>Search for <a href="https://t.me/sehatmand_bot" target="_blank" >@sehatmand_bot</a>
- on Telegram. Use <code>/start</code> to register, <code>/daily</code> for check-ins, and <code>/weekly</code> for measurements.</p>
-<h2 id="self-hosting-this-bot-for-yourself">
-Self-hosting this bot for yourself
-<a href="#self-hosting-this-bot-for-yourself" class="heading-anchor">#</a>
-</h2>
-<p>If you want to keep your data to yourself, you can simply run this bot on your server by following these instructions:</p>
-<ol>
-<li>Create a <code>.env</code> file with your Telegram bot token:</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">BOT_API_KEY=your_telegram_bot_token
-</span></span></code></pre></div><ol start="2">
-<li>Create an empty <code>app.db</code> file in the project root (it will be automatically initialized with required tables)</li>
-<li>Create a docker-compose.yaml file with these contents:</li>
+<li>Create <code>.env</code> file: <code>BOT_API_KEY=your_telegram_bot_token</code></li>
+<li>Create empty <code>app.db</code> file</li>
+<li>Use docker-compose.yaml:</li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;3.8&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">sehat</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">ghcr.io/manparvesh/sehat:main</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">sehat</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">./app.db:/data/app.db</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">env_file</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">.env</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
 </span></span></span></code></pre></div><ol start="4">
-<li>Run using Docker Compose:</li>
+<li>Run: <code>docker compose up</code></li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker compose up
-</span></span></code></pre></div><h2 id="future-plans">
+<h2 id="future-plans">
 Future Plans
 <a href="#future-plans" class="heading-anchor">#</a>
 </h2>
 <ul>
-<li>BMI tracking</li>
+<li>BMI tracking and trends</li>
 <li>Achievement streaks</li>
-<li>Better visualization</li>
+<li>Better data visualization</li>
 <li>Custom reminder times</li>
 </ul>
-<p>The best tracker is one you&rsquo;ll actually use - so I&rsquo;m aiming to keep using this one as much as I can, and keep improving it.</p>
 <hr>
 <p><em>&ldquo;Sehatmand&rdquo; means &ldquo;healthy&rdquo; in Punjabi/Hindi</em></p>
 </section>
@@ -144,7 +134,7 @@ Future Plans
   
   <div class="previous-post" style="display:inline-block;">
     
-    <a class="link-reverse" href="https://blog.manparvesh.com/posts/single-screen-efficiency/?ref=footer">« Single Screen Efficiency</a>
+    <a class="link-reverse" href="https://blog.manparvesh.com/posts/single-screen-efficiency/?ref=footer">« Optimizing Single-Screen Productivity on macOS</a>
     
   </div>
 
