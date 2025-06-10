@@ -1,55 +1,57 @@
 {{ define "main" }}
 <article id="main" class="home-page">
-{{ partial "brand.html" . }}
-{{ with .Content }}
+  {{ partial "brand.html" . }}
+  {{ with .Content }}
   <section>
-  {{ . }}
+    {{ . }}
   </section>
-{{ end }}
-<section class="page-list">
-{{ $pgFilter1 := where .Site.RegularPages "Draft" false }}
-{{ $pgFilter2 := where .Site.RegularPages "Params.date" "!=" nil }}
-{{ $pgFilter := $pgFilter1 | intersect $pgFilter2 }}
-{{ range (.Paginate $pgFilter).Pages }}
-  <h2 class="content-title">
-  {{ if .IsNode }}
-  <a href="{{ .Permalink }}">{{ .Title}}</a>
-  {{ else }}
-  <a href="{{ .RelPermalink }}">{{ .Title }}{{ if .Draft }}&nbsp;:: Draft{{end}}</a>
   {{ end }}
-  </h2>
+  <section class="page-list">
+    {{ $pgFilter1 := where .Site.RegularPages "Draft" false }}
+    {{ $pgFilter2 := where .Site.RegularPages "Params.date" "!=" nil }}
+    {{ $pgFilter := $pgFilter1 | intersect $pgFilter2 }}
+    {{ range (.Paginate $pgFilter).Pages }}
+    <div style="text-align: center; margin: 2rem 0;">
+      <p style="font-size: 1.7rem; margin-bottom: 0.5rem; font-weight: normal;">
+        {{ if .IsNode }}
+        <a href="{{ .Permalink }}" style="color: inherit;">{{ .Title}}</a>
+        {{ else }}
+        <a href="{{ .RelPermalink }}" style="color: inherit;">{{ .Title }}{{ if .Draft }}&nbsp;:: Draft{{end}}</a>
+        {{ end }}
+      </p>
+      <p style="font-size: 1rem; color: #666; margin-bottom: 0.5rem;">{{ .Date.Format "2 Jan, 2006" }}</p>
+      <!-- {{ if .Description }}
+      <p style="font-size: 1rem;">{{ .Description }}</p>
+      {{ else }}
+      {{ if .Site.Params.showSummary }}
+      <p style="font-size: 1rem;">{{ truncate 140 .Summary }}</p>
+      {{ end }}
+      {{ end }} -->
+    </div>
+    {{ end }}
+  </section>
 
-  {{ if .Description }}
-  <p>{{ .Description }}</p>
-  {{ else }}
-  {{ if .Site.Params.showSummary }}
-  <p>{{ truncate 140 .Summary }}</p>
+  {{ if and (.Paginator) (gt .Paginator.TotalPages 1) }}
+  <hr />
+
+  <span class="previous-page">
+    {{ if .Paginator.HasPrev }}
+    <a class="link-reverse" href="{{.Paginator.Prev.URL}}">«</a>
+    {{ end }}
+  </span>
+
+  <span class="pagination-indicator">
+    {{.Paginator.PageNumber}} / {{.Paginator.TotalPages}}
+  </span>
+
+  <span class="next-page">
+    {{ if .Paginator.HasNext }}
+    <a class="link-reverse" href="{{.Paginator.Next.URL}}">»</a>
+    {{ end }}
+  </span>
+
   {{ end }}
-  {{ end }}
-{{ end }}
-</section>
 
-{{ if and (.Paginator) (gt .Paginator.TotalPages 1) }}
-<hr />
-
-<span class="previous-page">
-{{ if .Paginator.HasPrev }}
-<a class="link-reverse" href="{{.Paginator.Prev.URL}}">«</a>
-{{ end }}
-</span>
-
-<span class="pagination-indicator">
-{{.Paginator.PageNumber}} / {{.Paginator.TotalPages}}
-</span>
-
-<span class="next-page">
-{{ if .Paginator.HasNext }}
-<a class="link-reverse" href="{{.Paginator.Next.URL}}">»</a>
-{{ end }}
-</span>
-
-{{ end }}
-
-{{ partial "footer.html" . }}
+  {{ partial "footer.html" . }}
 </article>
 {{ end }}

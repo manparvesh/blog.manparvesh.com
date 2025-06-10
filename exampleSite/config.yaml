@@ -9,7 +9,7 @@ hasCJKLanguage: true
 # The url of your website
 baseurl: "https://blog.manparvesh.com/"
 # The title of your website (shown on all the pages)
-title: "Man Parvesh's Tech Shenanigans"
+title: "Man Parvesh's Technical Journal"
 canonifyurls: true
 # Number of posts per page on the home page
 paginate: 10
@@ -31,7 +31,7 @@ services:
 
 params:
   # Subtitle of the website
-  subtitle: "My writings about all the fun I have with software and technology"
+  subtitle: "Deep dives into software engineering, system design, and technology innovations"
   favicon: "./favicon.ico"
   touchicon: "./touch-icon.png"
   # Dark code highlighting

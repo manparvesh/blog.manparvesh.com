@@ -1,32 +1,34 @@
 <section>
-<h1 class="content-title">
-{{- .Title -}}{{- if .Draft -}}&nbsp;:: Draft{{- end -}}
-</h1>
-{{- if .Params.subtitle -}}
-<p class=subtitle>{{ .Params.subtitle }}</p>
-{{- end -}}
+  <h1 class="content-title">
+    {{- .Title -}}{{- if .Draft -}}&nbsp;:: Draft{{- end -}}
+  </h1>
+  <!-- {{- if .Params.subtitle -}}
+  <p class=subtitle style="text-align: center;">{{ .Params.subtitle }}</p>
+  {{- end -}} -->
 
-{{- if and (.IsPage) (.Params.meta) -}}
-<span class="content-meta">
-  {{- if .Params.author -}}
-  <p class="author">✍️ {{ .Params.author }}</p>
-  {{- end -}}
+  {{- if and (.IsPage) (.Params.meta) -}}
+  <span class="content-meta" style="text-align: center; display: block;">
+    <!-- {{- if .Params.author -}}
+    <p class="author">By {{ .Params.author }}</p>
+    {{- end -}} -->
 
-  {{- if not .Params.hidedate -}}
-  <span class="date">📆 {{ .Date.Format "2 Jan, 2006" }}&nbsp;&nbsp</span>
-  {{- end -}}
+    {{- if not .Params.hidedate -}}
+    <span class="date">{{ .Date.Format "2 Jan, 2006" }}&nbsp;&nbsp</span>
+    {{- end -}}
 
-  {{- if not .Params.hidereadtime -}}
-  <span>🕒 {{ .ReadingTime }} min&nbsp;&nbsp</span>
-  {{- end -}}
+    <!-- {{- if not .Params.hidereadtime -}}
+    <span>{{ .ReadingTime }} min read&nbsp;&nbsp</span>
+    {{- end -}} -->
 
-  {{- if .Params.tags -}}
-  <span>🏷️
-  {{- range .Params.tags -}}
-  <a href="{{ "/tags/" | absURL }}{{ . | urlize }}">{{ . }}</a>&nbsp;
-  {{- end -}}
+    <br />
+
+    {{- if .Params.tags -}}
+    <span>
+      {{- range .Params.tags -}}
+      <a href="{{ " /tags/" | absURL }}{{ . | urlize }}">{{ . }}</a>&nbsp;
+      {{- end -}}
+    </span>
+    {{- end -}}
   </span>
   {{- end -}}
-</span>
-{{- end -}}
 </section>

@@ -1,7 +1,6 @@
-<nav class="menu">
-    <ul>
-    {{ range .Site.Menus.nav  }}
-        <li><a href="{{ .URL }}">{{ .Pre }}{{ .Name }}</a></li>
+<nav class="menu" style="text-align: center;">
+    {{ range $index, $element := .Site.Menus.nav }}
+        {{- if $index -}}&nbsp;|&nbsp;{{- end -}}
+        <a href="{{ .URL }}">{{ .Pre }}{{ .Name }}</a>
     {{ end }}
-    </ul>
 </nav>
