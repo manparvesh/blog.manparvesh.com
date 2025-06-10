@@ -1,133 +1,130 @@
-# Tufte Hugo Theme
+# Man Parvesh's Technical Journal
 
-> [!NOTE]  
-> This theme was copied from https://github.com/loikein/hugo-tufte
+A technical blog focused on software engineering, system design, and technology innovations. Built with Hugo and styled with LaTeX.css for clean, academic typography.
 
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md) [![Test Build](https://github.com/loikein/hugo-tufte/actions/workflows/test-build.yml/badge.svg)](https://github.com/loikein/hugo-tufte/actions/workflows/test-build.yml) [![Netlify Status](https://api.netlify.com/api/v1/badges/0a3e11e2-0209-40bb-8570-c3eb9b8471dc/deploy-status)](https://app.netlify.com/sites/huto-tufte/deploys)
+🌐 **Live Site**: [blog.manparvesh.com](https://blog.manparvesh.com/)
 
-## History of this project
+## About
 
-Hugo-Tufte is a minimalist blog-like theme for the
-[static site generator Hugo](https://gohugo.io) that
-attempts to be a faithful implementation of the
-[Tufte-css](https://github.com/edwardtufte/tufte-css) project. The current version supports mathematical typesetting via [KaTeX](https://katex.org/).
+This blog features deep dives into:
+- Software engineering practices and patterns
+- Distributed systems and databases
+- System design and architecture
+- Paper summaries and technical research
+- Personal projects and productivity tools
 
-- The original repo: [shawnohare/hugo-tufte](https://github.com/shawnohare/hugo-tufte)
-- Second repo: [slashformotion/hugo-tufte](https://github.com/slashformotion/hugo-tufte)
-- This ([loikein/hugo-tufte](https://github.com/loikein/hugo-tufte)) is now the _de facto_ third repo although my original intension was only to make a few tweaks.
+## Technical Stack
 
-## Quickstart
+- **Static Site Generator**: Hugo (v0.83.0+)
+- **Styling**: [LaTeX.css](https://latex.vercel.app/) for academic typography
+- **Comments**: [Giscus](https://giscus.app/) (GitHub Discussions-based)
+- **Analytics**: Google Analytics
+- **Hosting**: GitHub Pages
+- **Build**: Automated with Makefile
 
-### Prerequisite: Hugo Extended
+## Content Organization
 
-You'll need to install Hugo Extended for this theme to test it locally, since this theme uses SCSS.
-
-- On Windows:
-  - Using [Chocolatey](https://chocolatey.org/):
-    ```shell
-    choco install hugo-extended # remember, you might need admin privs
-    ```
-- On macOS:
-  + Using [Homebrew](https://brew.sh/):
-    ```shell
-    brew install hugo
-    ```
-
-### Check out the example site
-
-```shell
-git clone https://github.com/loikein/hugo-tufte.git
-cd hugo-tufte/exampleSite
-hugo server --buildDrafts --disableFastRender
+```
+content/
+├── posts/          # Technical blog posts
+├── series/         # Multi-part article series
+├── tags/           # Topic-based organization
+└── about/          # About page
 ```
 
-Then open `localhost:1313` or wherever it says in browser.
+### Featured Series
 
-The showcase posts are:
-
-- `The big old test page`
-- `Tufte CSS`
-
-### For a new site
-
-```shell
-hugo new site <your-site-name>
-cd <your-site-name>/themes/
-git clone https://github.com/loikein/hugo-tufte.git
-```
-
-Add `theme: 'hugo-tufte'` to your `config.yaml` to let your site know to actually use _this_ theme, specifically.
-
-Then run `hugo server --buildDrafts --disableFastRender` and open `localhost:1313` or wherever it says in browser.
+- **Paper Summaries**: Technical paper analyses and summaries
+- **Large-scale Distributed Systems**: System design deep dives
+- **Yoda**: CLI tool development journey
+- **Productivity**: Workflow optimization and tools
 
 ## Features
 
-### Math
+- **Clean Typography**: LaTeX.css provides beautiful academic styling
+- **Fast Loading**: Minimal JavaScript, lightweight design
+- **Academic Footnotes**: Proper numbered footnotes with backlinks
+- **Responsive Design**: Mobile-friendly layout
+- **GitHub-based Comments**: Community discussions via Giscus
+- **SEO Optimized**: Proper meta tags and structured data
+- **RSS Feed**: Stay updated with new posts
 
-In this version, I use [Yihui Xie's method](https://yihui.org/en/2018/07/latex-math-markdown/) to support (almost) seamless LaTeX rendering with [KaTeX](https://katex.org/).
+## Development
 
-For usage and examples, refer to [./exampleSite/content/posts/tufte-features.md ](https://github.com/loikein/hugo-tufte/blob/main/exampleSite/content/posts/tufte-features.md).
+### Local Development
 
-Downside: LaTeX in post title is no longer supported.
+```bash
+# Clone the repository
+git clone https://github.com/manparvesh/blog.manparvesh.com.git
+cd blog.manparvesh.com
 
-### Site Parameters
+# Start development server
+make serve
 
-`params` for this theme are:
+# Build for production
+make build
+```
 
-- `subtitle` string: If set, displayed under the main title.
-- `showPoweredBy` boolean: If `true`, display a shoutout to Hugo and this theme.
-- `copyrightHolder` string: Inserts the value in the default copyright notice.
-- `copyright` string: Custom copyright notice.
-- `math` boolean: Site wide kill switch for Latex support
-- `codeBlocksDark` boolean: If `true`, code blocks will use a dark theme.
-- `marginNoteInd` string: (NEW) Custom indicator for margin notes, with suggestions in comment. (Only displayed on mobile devices or inside `cols` shortcode.)
-- `sansSubtitle` boolean: If `true`, all subtitles (`h2` \& `h3`) will use up-right and sans-serif font. (As seen in _Visual Display of Quantitative Information_.)
-- (`centerArticle` boolean: Not implemented yet)
+### Project Structure
 
-**Socials**
+- `layouts/` - Hugo templates and partials
+- `assets/` - SCSS stylesheets and JavaScript
+- `static/` - Static assets (fonts, images, favicon)
+- `exampleSite/content/` - Blog posts and content
+- `docs/` - Generated static site (GitHub Pages)
 
-_(The followings have not been tested for this repo, use at your own risk.)_
+## Configuration
 
-You can add links to your social media profile by using thoses parameters:
+Key settings in `exampleSite/config.yaml`:
 
-- `github`: string
-- `gitlab`: string
-- `twitter`: string
-- `linkedin`: string
-- `patreon`: string
-- `youtube`: string
-- `medium`: string
-- `reddit`: string
-- `stackoverflow`: string
-- `instagram`: string
-- `mastodon`: string
-- `orcid`: string
-- `google_scholar`: string
+```yaml
+baseurl: "https://blog.manparvesh.com/"
+title: "Man Parvesh's Technical Journal"
+params:
+  subtitle: "Deep dives into software engineering, system design, and technology innovations"
+  copyright: "Copyright 2025 Man Parvesh Singh Randhawa"
+  giscus:
+    enable: true
+    repo: "manparvesh/blog.manparvesh.com"
+```
 
-Please see [`exampleSite/config.yaml`](https://github.com/loikein/hugo-tufte/blob/main/exampleSite/config.yaml#L47) to see the full implementation with exemples.
+## Writing
 
-### Page Parameters
+### Post Front Matter
 
-- `math` boolean: If `true`, try to render the page's LaTeX code using KaTeX.
-- `meta` boolean: If `true`, display page metadata such as author, date, categories.
-  + `hideDate` boolean: If `true`, do not display a page date in metadata.
-  + `hideReadTime` boolean: if `true`, do not display the page's reading time
-  estimate in metadata.
-- `toc` boolean: if true, display the table of contents for the page.
-- Layout parameters: (NEW)
-  + For more information, see [Hugo's Lookup Order | Hugo](https://gohugo.io/templates/lookup-order/).
-  + `type` string: If set to `book`, layout files in [./layouts/book/](https://github.com/loikein/hugo-tufte/tree/main/layouts/book) will be prioritised.
-  + `layout` string: If set, layout files with the name of this field's value will be prioritised.
+```yaml
+---
+title: "Your Post Title"
+date: 2025-01-01
+meta: true      # Show metadata (date, tags)
+toc: true       # Show table of contents
+tags: ["hugo", "blogging", "technology"]
+series: ["series-name"]  # Optional
+---
+```
 
-### Shortcodes
+### Footnotes
 
-This theme provides the following shortcodes in an attempt to completely
-support all the features present in the [Tufte-css](https://github.com/edwardtufte/tufte-css) project.
+Standard Markdown footnotes are supported:
 
-For usage and examples, refer to [./exampleSite/content/posts/tufte-features.md ](https://github.com/loikein/hugo-tufte/blob/main/exampleSite/content/posts/tufte-features.md).
+```markdown
+This is a statement[^1].
 
-- `blockquote`
-- `div`
-- `epigraph`
-- `marginnote`
-- `sidenote`
+[^1]: This is the footnote content.
+```
+
+## Contact & Social
+
+- **LinkedIn**: [linkedin.com/in/manparvesh](https://linkedin.com/in/manparvesh)
+- **GitHub**: [github.com/manparvesh](https://github.com/manparvesh)
+- **Website**: [manparvesh.com](https://manparvesh.com)
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+## Credits
+
+- Typography: [LaTeX.css](https://latex.vercel.app/)
+- Comments: [Giscus](https://giscus.app/)
+- Static site generator: [Hugo](https://gohugo.io/)

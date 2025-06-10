@@ -4,7 +4,6 @@ subtitle: Summary of the scientific paper on AWS MemoryDB
 author: Man Parvesh Singh Randhawa
 date: "2024-11-05T21:39:14-08:00"
 meta: true
-math: true
 toc: true
 hideDate: false
 hideReadTime: false

@@ -1,3 +1,3 @@
-module github.com/loikein/hugo-tufte
+module github.com/manparvesh/blog
 
 go 1.17

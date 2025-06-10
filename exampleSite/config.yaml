@@ -48,10 +48,7 @@ params:
   hidedate: false
   # Site wide kill switch for post summary on home page
   showSummary: true
-  # Site wide kill switch for LaTeX support
-  math: true
-  KaTeXVersion: 0.16.4
-  KaTeXCDN: "//cdn.jsdelivr.net/npm"
+  # LaTeX.css provides typography, mathematical rendering not needed
   # #### Control style flavours of the website
   # Use upright & sans-serif font for subtitles
   sansSubtitle: false
