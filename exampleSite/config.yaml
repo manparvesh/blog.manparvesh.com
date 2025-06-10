@@ -24,8 +24,8 @@ markup:
     guessSyntax: true
 
 services:
-  disqus:
-    shortname: manparvesh
+  # disqus:
+  #   shortname: manparvesh
   googleAnalytics:
     ID: G-2HBXT7KT6V
 
@@ -73,6 +73,14 @@ params:
   # mastodon: instance.url/@username
   # orcid: 0000-0003-0634-3275
   # google_scholar: jm5QaHkAAAAJ
+
+  # Giscus comments configuration
+  giscus:
+    enable: true # Set to true after GitHub setup
+    repo: "manparvesh/blog.manparvesh.com" # Your GitHub repo in format "username/repo-name"
+    repoId: "R_kgDONJr9nQ" # Get from https://giscus.app
+    category: "General" # Discussion category (recommend "General")
+    categoryId: "DIC_kwDONJr9nc4CrTi3" # Get from https://giscus.app
 
 taxonomies:
   series: series
