@@ -124,12 +124,7 @@ while providing single-digit millisecond write and microsecondscale read latenci
 </h3>
 <p>Redis allows horizontal scaling and splits its key space into 16384 slots that are distributed across one or more shards as a part of the server setup. Each shard has a single primary and zero or more read-only replicas.</p>
 <p>Discovering lock-to-shard mapping is implemented inside client logic.</p>
-<p>Replication between primary and replica nodes is implemented as a passive logical replication<label for="sidenote-1" class="margin-toggle sidenote-number">(1)</label>
-<input type="checkbox" id="sidenote-1" class="margin-toggle"/>
-<span class="sidenote">
-<span class="sidenote-number">(1)</span>a.k.a. eventually consistent
-</span>
-.</p>
+<p>Replication between primary and replica nodes is implemented as a passive logical replication<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
 <p>Another limitation in this architecture is that it doesn&rsquo;t allow all commands to be naively forwarded to replicas - commands that include some degree of randomization - like SPOP.</p>
 <h3 id="22-challenges-of-maintaining-durability-and-consistency">
 2.2. Challenges of Maintaining Durability and Consistency
@@ -240,12 +235,7 @@ key level.</p>
 6.2.2. Consistency
 <a href="#622-consistency" class="heading-anchor">#</a>
 </h4>
-<p>Formal methods were used to check all components. S3 uses lightweight formal methods and TLA+. The internal transaction log service is verified using TLA+. MemoryDB is verified using P.<label for="sidenote-2" class="margin-toggle sidenote-number">(2)</label>
-<input type="checkbox" id="sidenote-2" class="margin-toggle"/>
-<span class="sidenote">
-<span class="sidenote-number">(2)</span>I&rsquo;m unfamiliar with all of these methods at the time of writing this article. Will read about these some day.
-</span>
-</p>
+<p>Formal methods were used to check all components. S3 uses lightweight formal methods and TLA+. The internal transaction log service is verified using TLA+. MemoryDB is verified using P.<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
 <h2 id="7-my-thoughts-on-this-paper">
 7. My thoughts on this paper
 <a href="#7-my-thoughts-on-this-paper" class="heading-anchor">#</a>
@@ -256,6 +246,17 @@ key level.</p>
 <li>I&rsquo;m curious to know what is the exact number for the write latency (the paper mentions single-digit milliseconds)</li>
 <li>Would be interesting to read about the formal correctness strategy for such systems.</li>
 </ol>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>a.k.a. eventually consistent&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>I&rsquo;m unfamiliar with all of these methods at the time of writing this article. Will read about these some day.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
 </section>
   
   

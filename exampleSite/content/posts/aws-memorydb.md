@@ -39,7 +39,7 @@ Redis allows horizontal scaling and splits its key space into 16384 slots that a
 
 Discovering lock-to-shard mapping is implemented inside client logic.
 
-Replication between primary and replica nodes is implemented as a passive logical replication{{<sidenote>}}a.k.a. eventually consistent{{</sidenote>}}.
+Replication between primary and replica nodes is implemented as a passive logical replication[^1].
 
 Another limitation in this architecture is that it doesn't allow all commands to be naively forwarded to replicas - commands that include some degree of randomization - like SPOP.
 
@@ -130,7 +130,7 @@ All snapshots generate a checksum, and so does the transaction log - for the dat
 
 #### 6.2.2. Consistency
 
-Formal methods were used to check all components. S3 uses lightweight formal methods and TLA+. The internal transaction log service is verified using TLA+. MemoryDB is verified using P.{{<sidenote>}}I'm unfamiliar with all of these methods at the time of writing this article. Will read about these some day.{{</sidenote>}}
+Formal methods were used to check all components. S3 uses lightweight formal methods and TLA+. The internal transaction log service is verified using TLA+. MemoryDB is verified using P.[^2]
 
 ## 7. My thoughts on this paper
 
@@ -138,3 +138,6 @@ Formal methods were used to check all components. S3 uses lightweight formal met
 1. The transaction log service seems to be an amazing solution that powers several AWS systems. Would be great to read a paper on it some day.
 2. I'm curious to know what is the exact number for the write latency (the paper mentions single-digit milliseconds)
 3. Would be interesting to read about the formal correctness strategy for such systems.
+
+[^1]: a.k.a. eventually consistent
+[^2]: I'm unfamiliar with all of these methods at the time of writing this article. Will read about these some day.

@@ -12,14 +12,14 @@
     {{ $pgFilter := $pgFilter1 | intersect $pgFilter2 }}
     {{ range (.Paginate $pgFilter).Pages }}
     <div style="text-align: center; margin: 2rem 0;">
-      <p style="font-size: 1.7rem; margin-bottom: 0.5rem; font-weight: normal;">
+      <p style="font-size: 1.7rem; margin-bottom: 0; font-weight: normal;">
         {{ if .IsNode }}
         <a href="{{ .Permalink }}" style="color: inherit;">{{ .Title}}</a>
         {{ else }}
         <a href="{{ .RelPermalink }}" style="color: inherit;">{{ .Title }}{{ if .Draft }}&nbsp;:: Draft{{end}}</a>
         {{ end }}
       </p>
-      <p style="font-size: 1rem; color: #666; margin-bottom: 0.5rem;">{{ .Date.Format "2 Jan, 2006" }}</p>
+      <p style="font-size: 1rem; color: #666; margin-top: 0; margin-bottom: 0.5rem;">{{ .Date.Format "2 Jan, 2006" }}</p>
       <!-- {{ if .Description }}
       <p style="font-size: 1rem;">{{ .Description }}</p>
       {{ else }}

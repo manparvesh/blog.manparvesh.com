@@ -25,7 +25,9 @@ description: "A brief history of Yoda and why I decided to rewrite it"
 
 
 ## Why is it called Yoda
-Since Yoda was a movie character considered wise and knowledgeable, I named it Yoda and made it open source{{< sidenote >}}_[Github: yoda-pa/yoda](https://github.com/yoda-pa/yoda/)_{{< /sidenote >}}.
+Since Yoda was a movie character considered wise and knowledgeable, I named it Yoda and made it open source[^1].
+
+[^1]: _[Github: yoda-pa/yoda](https://github.com/yoda-pa/yoda/)_
 
 ## History of the project 🕰️
 

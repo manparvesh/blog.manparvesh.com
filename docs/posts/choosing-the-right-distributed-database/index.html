@@ -104,46 +104,21 @@ Evaluating AWS solutions
 AWS DynamoDB
 <a href="#aws-dynamodb" class="heading-anchor">#</a>
 </h3>
-<p>DynamoDB<label for="sidenote-1" class="margin-toggle sidenote-number">(1)</label>
-<input type="checkbox" id="sidenote-1" class="margin-toggle"/>
-<span class="sidenote">
-<span class="sidenote-number">(1)</span><a href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf" target="_blank" >https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf</a>
-</span>
- is an incredible key-value database solution provided by AWS. It&rsquo;s highly reliable and performant.</p>
-<p>However, it cannot compare to ultra-low latencies provided by redis-based solutions. And the linked paper mentions that DynamoDB sacrifices consistency for availability<label for="sidenote-2" class="margin-toggle sidenote-number">(2)</label>
-<input type="checkbox" id="sidenote-2" class="margin-toggle"/>
-<span class="sidenote">
-<span class="sidenote-number">(2)</span>it supports eventual consistency, which is achieved using a shared transaction log service
-</span>
-, which is not good enough for our application.</p>
+<p>DynamoDB<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> is an incredible key-value database solution provided by AWS. It&rsquo;s highly reliable and performant.</p>
+<p>However, it cannot compare to ultra-low latencies provided by redis-based solutions. And the linked paper mentions that DynamoDB sacrifices consistency for availability<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, which is not good enough for our application.</p>
 <p>The above shortcomings are also true for similar solutions provided by AWS, such as AWS DocumentDB (which is based on MongoDB).</p>
 <h3 id="aws-elasticache">
 AWS Elasticache
 <a href="#aws-elasticache" class="heading-anchor">#</a>
 </h3>
-<p>Elasticache<label for="sidenote-3" class="margin-toggle sidenote-number">(3)</label>
-<input type="checkbox" id="sidenote-3" class="margin-toggle"/>
-<span class="sidenote">
-<span class="sidenote-number">(3)</span><a href="https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/amazon-elasticache-overview.html" target="_blank" >https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/amazon-elasticache-overview.html</a>
-</span>
- is another solution provided by AWS that uses Redis<label for="sidenote-4" class="margin-toggle sidenote-number">(4)</label>
-<input type="checkbox" id="sidenote-4" class="margin-toggle"/>
-<span class="sidenote">
-<span class="sidenote-number">(4)</span>it also provides an option to use memcached as its engine, but we focus on redis in this post
-</span>
- and promises sub-millisecond latencies for reads and writes.</p>
+<p>Elasticache<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> is another solution provided by AWS that uses Redis<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> and promises sub-millisecond latencies for reads and writes.</p>
 <p>While it&rsquo;s an incredible option, its only (and biggest) downside is that it does not provide any guarantees on the consistency of our data.</p>
 <p>&hellip; and so we continue looking at other available services we can use.</p>
 <h3 id="aws-memorydb">
 AWS MemoryDB
 <a href="#aws-memorydb" class="heading-anchor">#</a>
 </h3>
-<p>MemoryDB<label for="sidenote-5" class="margin-toggle sidenote-number">(5)</label>
-<input type="checkbox" id="sidenote-5" class="margin-toggle"/>
-<span class="sidenote">
-<span class="sidenote-number">(5)</span><a href="https://www.amazon.science/publications/amazon-memorydb-a-fast-and-durable-memory-first-cloud-database" target="_blank" >https://www.amazon.science/publications/amazon-memorydb-a-fast-and-durable-memory-first-cloud-database</a>
-</span>
- is another solution that is designed for high durability and in-memory performance. It is fully compatible with redis and provides single-digit millisecond writes and microsecond-scale read latencies, strong consistency and high durability.</p>
+<p>MemoryDB<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup> is another solution that is designed for high durability and in-memory performance. It is fully compatible with redis and provides single-digit millisecond writes and microsecond-scale read latencies, strong consistency and high durability.</p>
 <p>The only downside for it might be its cost being slightly higher than the other solutions, but since the other solutions are unable to provide us strong consistency, we can&rsquo;t really use them regardless.</p>
 <p>You know what this means..</p>
 <p>🥁 We will be using <strong>MemoryDB</strong> for our service as it seems to be the best fit for our requirements!</p>
@@ -164,6 +139,29 @@ Conclusion
 </h2>
 <p>We will run load tests to derive the exact number for the provided write latency (which is supposed to be single-digit milliseconds). If it&rsquo;s a high number, then we might have to reconsider our design and consider sacrificing consistency and using Elasticache.</p>
 <p>For now, we are happy that we have a seemingly viable solution for our service.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf" target="_blank" >https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf</a>
+&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>it supports eventual consistency, which is achieved using a shared transaction log service&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/amazon-elasticache-overview.html" target="_blank" >https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/amazon-elasticache-overview.html</a>
+&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>it also provides an option to use memcached as its engine, but we focus on redis in this post&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://www.amazon.science/publications/amazon-memorydb-a-fast-and-durable-memory-first-cloud-database" target="_blank" >https://www.amazon.science/publications/amazon-memorydb-a-fast-and-durable-memory-first-cloud-database</a>
+&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
 </section>
   
   

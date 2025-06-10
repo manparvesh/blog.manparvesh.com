@@ -36,15 +36,22 @@ Our requirements for this database service were as follows:
 
 ### AWS DynamoDB
 
-DynamoDB{{<sidenote>}}https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf{{</sidenote>}} is an incredible key-value database solution provided by AWS. It's highly reliable and performant.
+DynamoDB[^1] is an incredible key-value database solution provided by AWS. It's highly reliable and performant.
 
-However, it cannot compare to ultra-low latencies provided by redis-based solutions. And the linked paper mentions that DynamoDB sacrifices consistency for availability{{<sidenote>}}it supports eventual consistency, which is achieved using a shared transaction log service{{</sidenote>}}, which is not good enough for our application.
+[^1]: https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf
+
+However, it cannot compare to ultra-low latencies provided by redis-based solutions. And the linked paper mentions that DynamoDB sacrifices consistency for availability[^2], which is not good enough for our application.
+
+[^2]: it supports eventual consistency, which is achieved using a shared transaction log service
 
 The above shortcomings are also true for similar solutions provided by AWS, such as AWS DocumentDB (which is based on MongoDB).
 
 ### AWS Elasticache
 
-Elasticache{{<sidenote>}}https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/amazon-elasticache-overview.html{{</sidenote>}} is another solution provided by AWS that uses Redis{{<sidenote>}}it also provides an option to use memcached as its engine, but we focus on redis in this post{{</sidenote>}} and promises sub-millisecond latencies for reads and writes.
+Elasticache[^3] is another solution provided by AWS that uses Redis[^4] and promises sub-millisecond latencies for reads and writes.
+
+[^3]: https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/amazon-elasticache-overview.html
+[^4]: it also provides an option to use memcached as its engine, but we focus on redis in this post
 
 While it's an incredible option, its only (and biggest) downside is that it does not provide any guarantees on the consistency of our data. 
 
@@ -52,7 +59,9 @@ While it's an incredible option, its only (and biggest) downside is that it does
 
 ### AWS MemoryDB
 
-MemoryDB{{<sidenote>}}https://www.amazon.science/publications/amazon-memorydb-a-fast-and-durable-memory-first-cloud-database{{</sidenote>}} is another solution that is designed for high durability and in-memory performance. It is fully compatible with redis and provides single-digit millisecond writes and microsecond-scale read latencies, strong consistency and high durability.
+MemoryDB[^5] is another solution that is designed for high durability and in-memory performance. It is fully compatible with redis and provides single-digit millisecond writes and microsecond-scale read latencies, strong consistency and high durability.
+
+[^5]: https://www.amazon.science/publications/amazon-memorydb-a-fast-and-durable-memory-first-cloud-database
 
 The only downside for it might be its cost being slightly higher than the other solutions, but since the other solutions are unable to provide us strong consistency, we can't really use them regardless.
 
