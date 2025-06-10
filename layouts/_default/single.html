@@ -6,12 +6,14 @@
 
 {{ define "main" }}
 <article id="main">
+  <section>{{ partial "nav.html" . }}</section>
   {{ partial "content.header.html" . }}
   {{ partial "toc.html" . }}
   <section>{{ .Content }}</section>
   {{ partial "series.html" . }}
   <section>{{ partial "footer.html" . }}</section>
-  <section>{{ partial "nav.html" . }}</section>
+  
+  <hr />
   {{ partial "giscus.html" . }}
 </article>
 {{ end }}

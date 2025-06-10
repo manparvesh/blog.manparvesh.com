@@ -1,5 +1,15 @@
 <section>
-  <h1 class="content-title">
+  <style>
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: normal !important;
+    }
+    
+    a.heading-anchor {
+      text-decoration: none !important;
+      /* border-bottom: none !important; */
+    }
+  </style>
+  <h1 class="content-title" style="text-align: center; margin-top: 0; margin-bottom: 0;">
     {{- .Title -}}{{- if .Draft -}}&nbsp;:: Draft{{- end -}}
   </h1>
   <!-- {{- if .Params.subtitle -}}
@@ -31,4 +41,5 @@
     {{- end -}}
   </span>
   {{- end -}}
+  <hr />
 </section>
